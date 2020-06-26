@@ -1,6 +1,6 @@
 <template>
 	<v-app id="inspire">
-		<v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
+		<!-- <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
 			<v-list dense>
 				<template>
 					<v-list-item :to="{name:'home'}">
@@ -10,8 +10,70 @@
 						<v-list-item-title>Inicio</v-list-item-title>
 					</v-list-item>
 				</template>
+				<template>
+					<v-list-group>
+						<v-list-item slot="activator">
+							<v-list-item-content>
+								<v-list-item-title>Almacén</v-list-item-title>
+							</v-list-item-content>
+							<v-list-item-action>
+								<v-icon>contacts</v-icon>
+							</v-list-item-action>
+						</v-list-item>
+						<v-list-item :to="{name:''}">
+							<v-list-item-action>
+								<v-icon>panorama_fish_eye</v-icon>
+							</v-list-item-action>
+							<v-list-item-title>
+								Categorías
+							</v-list-item-title>
+						</v-list-item>
+					</v-list-group>
+				</template>
 			</v-list>
-		</v-navigation-drawer>
+		</v-navigation-drawer> -->
+		<v-navigation-drawer
+        v-model="drawer"
+		:clipped="$vuetify.breakpoint.lgAndUp" app
+        :expand-on-hover="expandOnHover"
+        :mini-variant="miniVariant"
+        :right="right"
+        :permanent="permanent"        
+        absolute
+      >
+        <v-list
+          dense
+          nav
+          class="py-0"
+        >
+          <v-list-item two-line :class="miniVariant && 'px-0'">
+            <v-list-item-avatar>
+              <img src="https://randomuser.me/api/portraits/men/81.jpg">
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>Application</v-list-item-title>
+              <v-list-item-subtitle>Subtext</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
 
 		<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
@@ -53,36 +115,11 @@ export default {
 	data: () => ({
 		dialog: false,
 		drawer: null,
-		items: [
-			{ icon: "mdi-contacts", text: "Contacts" },
-			{ icon: "mdi-history", text: "Frequently contacted" },
-			{ icon: "mdi-content-copy", text: "Duplicates" },
-			{
-				icon: "mdi-chevron-up",
-				"icon-alt": "mdi-chevron-down",
-				text: "Labels",
-				model: true,
-				children: [{ icon: "mdi-plus", text: "Create label" }]
-			},
-			{
-				icon: "mdi-chevron-up",
-				"icon-alt": "mdi-chevron-down",
-				text: "More",
-				model: false,
-				children: [
-					{ text: "Import" },
-					{ text: "Export" },
-					{ text: "Print" },
-					{ text: "Undo changes" },
-					{ text: "Other contacts" }
-				]
-			},
-			{ icon: "mdi-cog", text: "Settings" },
-			{ icon: "mdi-message", text: "Send feedback" },
-			{ icon: "mdi-help-circle", text: "Help" },
-			{ icon: "mdi-cellphone-link", text: "App downloads" },
-			{ icon: "mdi-keyboard", text: "Go to the old version" }
-		]
+		 items: [
+          { title: 'Dashboard', icon: 'dashboard' },
+          { title: 'Photos', icon: 'mdi-image' },
+          { title: 'About', icon: 'mdi-help-box' },
+        ]
 	})
 };
 </script>
