@@ -1,79 +1,71 @@
 <template>
 	<v-app id="inspire">
-		<!-- <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
-			<v-list dense>
-				<template>
-					<v-list-item :to="{name:'home'}">
-						<v-list-item-action>
-							<v-icon>home</v-icon>
-						</v-list-item-action>
-						<v-list-item-title>Inicio</v-list-item-title>
-					</v-list-item>
-				</template>
-				<template>
-					<v-list-group>
-						<v-list-item slot="activator">
-							<v-list-item-content>
-								<v-list-item-title>Almacén</v-list-item-title>
-							</v-list-item-content>
-							<v-list-item-action>
-								<v-icon>contacts</v-icon>
-							</v-list-item-action>
-						</v-list-item>
-						<v-list-item :to="{name:''}">
-							<v-list-item-action>
-								<v-icon>panorama_fish_eye</v-icon>
-							</v-list-item-action>
-							<v-list-item-title>
-								Categorías
-							</v-list-item-title>
-						</v-list-item>
-					</v-list-group>
-				</template>
-			</v-list>
-		</v-navigation-drawer> -->
-		<v-navigation-drawer
+    <!-- sidebar -->
+    <v-navigation-drawer
         v-model="drawer"
 		:clipped="$vuetify.breakpoint.lgAndUp" app
         :expand-on-hover="expandOnHover"
         :mini-variant="miniVariant"
         :right="right"
-        :permanent="permanent"        
-        absolute
+        :permanent="permanent"
+        v-if="isloggedin"
       >
         <v-list
           dense
           nav
           class="py-0"
         >
-          <v-list-item two-line :class="miniVariant && 'px-0'">
-            <v-list-item-avatar>
-              <img src="https://randomuser.me/api/portraits/men/81.jpg">
-            </v-list-item-avatar>
-
-            <v-list-item-content>
-              <v-list-item-title>Application</v-list-item-title>
-              <v-list-item-subtitle>Subtext</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-divider></v-divider>
-
+          <v-list dense>
+        <template v-for="item in menu">
+          <v-list-group
+            v-if="item.subgrupo"
+            :key="item.titulo"
+            :prepend-icon="item.icono"
+            :append-icon="item.subgrupo.size > 0 ? item.icono : icon"
+            color="primary"
+          >
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ item.titulo }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list-item
+              v-for="(child, i) in item.subgrupo"
+              :key="i"
+              :to="child.ruta_cliente"
+              link
+            >
+              <v-list-item-action>
+                <v-icon>{{ child.icono }}</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ child.titulo }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
           <v-list-item
-            v-for="item in items"
-            :key="item.title"
+            v-else
+            :key="item.titulo"
             link
           >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-
+            <v-list-item-action>
+              <v-icon>{{ item.icono }}</v-icon>
+            </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title>
+                {{ item.titulo }}
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+        </template>
+      </v-list>
         </v-list>
       </v-navigation-drawer>
+		<!--  -->
 
 		<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
@@ -81,24 +73,49 @@
 				<span class="hidden-sm-and-down">SISCAP</span>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
-			<v-btn icon>
+			<!-- <v-btn icon>
 				<v-icon>apps</v-icon>
-			</v-btn>
+			</v-btn> -->
+      <!--  -->
+        
+        <v-menu bottom offset-y>
+          <template v-slot:activator="{on}">
+            <v-btn icon v-on="on" dark>
+              <v-list-item-avatar>
+                <img src="https://randomuser.me/api/portraits/men/81.jpg">
+              </v-list-item-avatar>
+            </v-btn>
+          </template>
+          <v-list dense>
+              <v-list-item offset-x class="avatar" @click="logout()">
+                  <v-list-item-action>
+                      <v-icon>power_settings_new</v-icon>
+                  </v-list-item-action>
+                  <v-list-item-content>
+                      <v-list-item>
+                        <v-list-item-title>{{ $t('menu_title_logout') }}</v-list-item-title>
+                    </v-list-item>
+                  </v-list-item-content>
+              </v-list-item>
+            </v-list>
+        </v-menu>
+        
+      <!--  -->
 		</v-app-bar>
-		<v-main>
-			<v-container class="fill-height" fluid>
-				<v-row align="center" justify="center">
-					<v-tooltip right>
-						<template>
-							<router-view></router-view>
-						</template>
-					</v-tooltip>
+		<v-main style="background-color:#ecf0f5">
+			<v-container fluid>
+				<v-row align="center" justify="center" :style="{background:$vuetify.theme.themes.light.background}">
+					<v-col cols="12" md="12">
+              <v-card class="main-card">
+                <router-view></router-view>
+            </v-card>
+          </v-col>
 				</v-row>
 			</v-container>
 		</v-main>
 		<template>
-			<v-card height="auto">
-				<v-footer absolute darken color="primary">
+			<v-card>
+				<v-footer darken color="primary">
 					<v-col class="text-center white--text pt-0" cols="12">
 						siscapIT &copy;{{ new Date().getFullYear() }}
 					</v-col>
@@ -108,18 +125,98 @@
 	</v-app>
 </template>
 <script>
+
 export default {
 	props: {
 		source: String
-	},
+  },
+  components:{
+    
+  },
+
+  created(){
+     this.menu = this.$store.state.services.loginService.getStorageMenu()
+  },
 	data: () => ({
 		dialog: false,
-		drawer: null,
-		 items: [
-          { title: 'Dashboard', icon: 'dashboard' },
-          { title: 'Photos', icon: 'mdi-image' },
-          { title: 'About', icon: 'mdi-help-box' },
-        ]
-	})
+    drawer: null,
+    menu:[],
+    icon: 'keyboard_arrow_up','icon-alt': 'keyboard_arrow_down',
+		items: [
+        { icon: 'home', text: 'Inicio' },
+        { icon: 'contacts', text: 'Contacts' },
+        { icon: 'history', text: 'Frequently contacted' },
+        { icon: 'content_copy', text: 'Duplicates' },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: 'Labels',
+          model: true,
+          children: [
+            { icon: 'add', text: 'Create label' },
+          ],
+        },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: 'More',
+          model: false,
+          children: [
+            { text: 'Import' },
+            { text: 'Export' },
+            { text: 'Print' },
+            { text: 'Undo changes' },
+            { text: 'Other contacts' },
+          ],
+        },
+        { icon: 'settings', text: 'Settings' },
+        { icon: 'chat_bubble', text: 'Send feedback' },
+        { icon: 'contact_support', text: 'Help' },
+        { icon: 'devices', text: 'App downloads' },
+        { icon: 'keyboard', text: 'Go to the old version' },
+      ],		
+        right: false,
+        permanent: false,
+        miniVariant: false,
+        expandOnHover: false,
+        background: false,
+  }),
+  methods:{
+    logout(){
+       this.$store.state.services.loginService.logout()
+       this.$router.push('login')
+    },
+  },
+
+  computed:{
+      isloggedin: function(){
+        if(this.$store.state.services.loginService.existingValidToken() || this.$store.state.services.loginService.verifyAuthCredentials())
+        {
+          return true
+        }
+        else
+        {
+          return false
+        }
+      }
+  },
 };
 </script>
+<style>
+  .v-avatar{
+    border: 1.7px solid #fff;
+  }
+  .container--fluid {    
+    padding: 10px 25px !important;
+  }
+  .main-card{
+    min-height: 80vh;
+  }
+  .v-list-item:hover{
+    background: #f1f1e2;
+    cursor: pointer;
+  }
+  .avatar > .v-list-item__action{
+    margin-right: 0!important;
+  }
+</style>  
