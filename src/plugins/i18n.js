@@ -10,6 +10,24 @@ const messages = {
                         login_placeholder_password:'Password',
 
                         menu_title_logout:'Logout',
+                        menu_title_search:'Search',
+
+                        miscelanius_new_item:'New Item',
+                        miscelanius_edit_title_item:'Edit Item',
+                        miscelanius_edit_item:'Edit',
+                        miscelanius_delete_item:'Delete',
+                        miscelanius_reload_item:'Reload',
+                        miscelanius_update_item:'Update',
+
+                        miscelanius_save_item:'Save',
+                        miscelanius_cancel_item:'Cancel',
+
+                        message_title_global:'Message',
+                        message_result_success:'Record saved successfully',
+                        message_result_edit_success:'Record updated successfully',
+                        message_result_delete_success:'Record deleted successfully',
+                        message_result_error:'An error ocurred: ',
+
                     }, 
                     'es':{
                         login_btn_title:'Ingresar',
@@ -18,6 +36,23 @@ const messages = {
                         login_placeholder_password:'Contraseña',
 
                         menu_title_logout:'Cerrar sesión',
+                        menu_title_search:'Buscar',
+
+                        miscelanius_new_item:'Nuevo registro',
+                        miscelanius_edit_title_item:'Editar registro',
+                        miscelanius_edit_item:'Editar',
+                        miscelanius_delete_item:'Borrar',
+                        miscelanius_reload_item:'Recargar',
+                        miscelanius_update_item:'Actualizar',
+
+                        miscelanius_save_item:'Guardar',
+                        miscelanius_cancel_item:'Cancelar',
+
+                        message_title_global:'Mensaje',
+                        message_result_success:'Registro guardado con éxito',
+                        message_result_edit_success:'Registro actualizado con éxito',
+                        message_result_delete_success:'Registro eliminado con éxito',
+                        message_result_error:'Ocurrió un error: ',
                     }
                 };
 

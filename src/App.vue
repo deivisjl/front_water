@@ -3,7 +3,7 @@
     <!-- sidebar -->
     <v-navigation-drawer
         v-model="drawer"
-		:clipped="$vuetify.breakpoint.lgAndUp" app
+		    :clipped="$vuetify.breakpoint.lgAndUp" app
         :expand-on-hover="expandOnHover"
         :mini-variant="miniVariant"
         :right="right"
@@ -102,13 +102,11 @@
         
       <!--  -->
 		</v-app-bar>
-		<v-main style="background-color:#ecf0f5">
+		<v-main style="background-color: rgb(226, 234, 245);">
 			<v-container fluid>
 				<v-row align="center" justify="center" :style="{background:$vuetify.theme.themes.light.background}">
 					<v-col cols="12" md="12">
-              <v-card class="main-card">
-                <router-view></router-view>
-            </v-card>
+              <router-view></router-view>
           </v-col>
 				</v-row>
 			</v-container>
@@ -218,5 +216,18 @@ export default {
   }
   .avatar > .v-list-item__action{
     margin-right: 0!important;
+  }
+  .theme--light.v-data-table > .v-data-table__wrapper > table > thead > tr > th,
+  .theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
+      border: thin solid rgba(0, 0, 0, 0.08);
+      /* border: .8px solid #ddd; */
+  }
+
+  .v-data-table__wrapper {
+      margin-left: 10px;
+      margin-right: 10px;
+  }
+  .swal2-title {
+    font-size: 1.3rem!important;
   }
 </style>  

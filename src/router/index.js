@@ -7,16 +7,23 @@ import auth from './middleware/auth'
 import middlewarePipeline from './middleware/middlewarePipeline'
 
 /* Importacion de componentes hacia las rutas */
-import home from '@/components/HelloWorld';
-import prueba from '@/components/PruebaComponent';
+import home from '@/components/InicioComponent';
 import login from '@/components/auth/LoginComponent';
+
+/* Importación de componentes del menu de acceso */
+import permiso from '@/components/acceso/permiso/Inicio';
+import rol from '@/components/acceso/rol/Inicio';
 
 Vue.use(VueRouter)
 
 const routes = [
+  { path: '*', redirect: '/' },
   {path:'/login', name:'login', component:login, meta: { middleware: [guest] }},
   {path:'/', name:'home', component:home, meta: { middleware: [auth] }},
-  {path:'/prueba', name:'prueba', component:prueba, meta: { middleware: [auth] } },
+
+  /* Rutas del menu de acceso */
+  {path:'/permisos', name:'permiso', component:permiso, meta: { middleware: [auth] }},
+  {path:'/roles', name:'rol', component:rol, meta: { middleware: [auth] }},
 ];
 
 const router = new VueRouter({

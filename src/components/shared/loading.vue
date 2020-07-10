@@ -1,15 +1,7 @@
 <template>
-  <div class="text-center over">
-    <div class="loader">
-        <v-progress-circular
-            indeterminate
-            color="light-blue"
-            size="50"
-            width="4"
-            align="center"
-            ></v-progress-circular>
-    </div>
-  </div>
+  <v-overlay>
+      <v-progress-circular indeterminate size="64" color="primary"></v-progress-circular>
+    </v-overlay>
 </template>
 
 <style scoped>

@@ -1,20 +1,25 @@
 <template>
-    <div></div>
+  <v-container fluid>
+      <v-row class="text-center">
+        <v-col cols="12" md="6">
+          <loading v-if="loader"></loading>
+          <h1>Inicio</h1>
+        </v-col>
+      </v-row>
+  </v-container>
 </template>
+
 <script>
 import loading from "./shared/loading"
 
 export default {
-  name: 'Acceso',
+  name: 'Inicio',
 
   components:{
         loading
     },
   data: () => ({
     loader:false,
-    model:{
-      libros:[]
-    }
   }),
   created(){
     //this.obtener_usuario()

@@ -1,24 +1,13 @@
 <template>
-  <v-container fluid>
-      <v-row class="text-center">
-        <v-col cols="12" md="6">
-          <loading v-if="loader"></loading>
-          <ul>
-            <li v-for="libro in model.libros">
-              {{ libro.name }}
-            </li>
-          </ul>
-        </v-col>
-        
-      </v-row>
-  </v-container>
+    <div>
+        <h1>Hello world from Rol</h1>
+    </div>
 </template>
-
 <script>
-import loading from "./shared/loading"
+import loading from "../shared/loading"
 
 export default {
-  name: 'HelloWorld',
+  name: 'Rol',
 
   components:{
         loading
@@ -29,6 +18,9 @@ export default {
       libros:[]
     }
   }),
+  mounted(){
+    
+  },
   created(){
     //this.obtener_usuario()
   },

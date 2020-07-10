@@ -10,9 +10,19 @@
                         </v-row>
                     </v-toolbar>
                     <v-card-text>
-                        <v-form :autocomplete="'off'" ref="form-login">
-                            <v-text-field prepend-icon="person" :label="$t('login_placeholder_username')" hide-details="auto" v-model="form.email"></v-text-field>
+                        <v-form :autocomplete="'off'" ref="form">
                             <v-text-field 
+                                    style="margin-bottom: 10px"
+                                    autofocus
+                                    outlined
+                                    dense
+                                    prepend-icon="person" 
+                                    :label="$t('login_placeholder_username')" 
+                                    hide-details="auto" v-model="form.email"></v-text-field>
+                            
+                            <v-text-field
+                                outlined
+                                dense 
                                 prepend-icon="lock" 
                                 :label="$t('login_placeholder_password')" 
                                 :type="showPassword ? 'text' : 'password'" 

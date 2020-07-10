@@ -3,6 +3,9 @@ import LoginService from '../services/LoginService'
 import HomeService from '../services/HomeService'
 import store from './index'
 
+/*  */
+import PermisoService from '../services/acceso/PermisoService'
+
 let baseUrl = 'http://www.sistema_agua.com'
 
 const credentials = {
@@ -73,4 +76,6 @@ export default {
   baseUrl,
   loginService: new LoginService(Axios, baseUrl, credentials),
   homeService: new HomeService(Axios, baseUrl),
+
+  permisoService: new PermisoService(Axios, baseUrl),
 }
