@@ -5,6 +5,8 @@ import store from './index'
 
 /*  */
 import PermisoService from '../services/acceso/PermisoService'
+import RolService from '../services/acceso/RolService'
+import UsuarioService from '../services/acceso/UsuarioService'
 
 let baseUrl = 'http://www.sistema_agua.com'
 
@@ -78,4 +80,6 @@ export default {
   homeService: new HomeService(Axios, baseUrl),
 
   permisoService: new PermisoService(Axios, baseUrl),
+  rolService: new RolService(Axios, baseUrl),
+  usuarioService: new UsuarioService(Axios, baseUrl),
 }

@@ -4,7 +4,7 @@
         <v-container fluid>
         <v-data-table
                 :headers="cabeceras"
-                :items="roles"
+                :items="items"
                 :search="buscar"
                 :single-select="singleSelect"
                 v-model="selected"
@@ -30,7 +30,7 @@
                 </template>
                 <template v-slot:top>
                     <v-toolbar flat color="white">
-                    <v-toolbar-title>Roles</v-toolbar-title>
+                    <v-toolbar-title>Usuarios</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details>
                         <v-icon slot="append">search</v-icon>
@@ -65,7 +65,18 @@
                               <v-icon>more_vert</v-icon>
                               <v-tooltip top v-if="unitario">
                                 <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on" @click="editar_rol(selected[0])">
+                                  <v-btn icon v-bind="attrs" v-on="on" @click="editar_roles(selected[0])">
+                                    <v-avatar color="primary" size="36">
+                                      <v-icon color="white darken-2">lock</v-icon>
+                                    </v-avatar>
+                                  </v-btn>
+                                </template>
+                                <span>{{ $t('miscelanius_rol_item') }}</span>
+                              </v-tooltip>
+                              <v-icon v-if="unitario">more_vert</v-icon>
+                              <v-tooltip top v-if="unitario">
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-btn icon v-bind="attrs" v-on="on" @click="editar_usuario(selected[0])">
                                     <v-avatar color="green" size="36">
                                       <v-icon color="white darken-2">edit</v-icon>
                                     </v-avatar>
@@ -76,7 +87,7 @@
                               <v-icon v-if="unitario">more_vert</v-icon>
                               <v-tooltip top v-if="opciones">
                                 <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on"  @click="eliminar_rol(selected[0])">
+                                  <v-btn icon v-bind="attrs" v-on="on"  @click="eliminar_usuario(selected[0])">
                                     <v-avatar color="red" size="36">
                                       <v-icon color="white darken-2">delete</v-icon>
                                     </v-avatar>
@@ -97,7 +108,7 @@
 import loading from "../../shared/loading"
 
 export default {
-  name: 'Rol',
+  name: 'Usuario',
 
   components:{
         loading
@@ -113,47 +124,53 @@ export default {
     selected:[],
     
     cabeceras:[
-      { text: 'Nombre', value: 'nombre' },
-      { text: 'Descripción', value: 'descripcion' }
+      { text: 'Nombre', value: 'name' },
+      { text: 'Correo electrónico', value: 'email' }
     ],
-    roles:[]
+    items:[]
   }),
   mounted(){
     
   },
   created(){    
-    this.obtener_roles()
+    this.obtener_usuarios()
   },
   methods:{
     nuevo(){
-       this.$router.push({path:`roles/nuevo`});
+       this.$router.push({path:`usuarios/nuevo`});
     },
     recargar(){
-      this.obtener_roles()
+      this.obtener_usuarios()
       this.selected=[]
     },
-    obtener_roles(){
+    obtener_usuarios(){
       this.loader = true
-       this.$store.state.services.rolService
-        .getRoles()
+       this.$store.state.services.usuarioService
+        .getUsuarios()
         .then(r=>{
             this.loader = false
-            this.roles = r.data
+            this.items = r.data
         })
         .catch(error => {
           this.loader = false
         })
     },
-    editar_rol(data){
+    editar_roles(data){
+        if(data)
+        {
+            this.$router.push({path:`usuarios/roles/`+data.id});
+        }
+    },
+    editar_usuario(data){
       if(data)
       {
-        this.$router.push({path:`roles/editar/`+data.id});
+        this.$router.push({path:`usuarios/editar/`+data.id});
       }
     },
-    eliminar_rol(data){
+    eliminar_usuario(data){
        this.$swal({
 		          title: "¿Desea eliminar el registro?",
-                  text: data.nombre,
+                  text: data.name,
                   icon: "warning",
                   showCancelButton: true,
                   reverseButtons: true
@@ -162,7 +179,7 @@ export default {
                     if(result.value)
                     {
                         this.loader = true
-                        this.$store.state.services.rolService
+                        this.$store.state.services.usuarioService
                           .deleteRol(data.id)
                           .then(r=>{
                               this.loader = false

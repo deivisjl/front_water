@@ -117,7 +117,7 @@ class LoginService {
     }
 
     getMenu(){
-        return this.axios.get(`${this.url}/api/usuario-rol`);
+        return this.axios.get(`${this.url}/api/usuario-menu`);
     }
 
     storeMenu(data){

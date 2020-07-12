@@ -1,49 +1,48 @@
 
-class PermisoService {
+class UsuarioService {
     axios
     baseUrl
     url
 
     constructor(axios, baseUrl){
         this.axios = axios
-        this.baseUrl = `${baseUrl}/api/permisos`
+        this.baseUrl = `${baseUrl}/api/usuarios`
         this.url = baseUrl
     }
 
-    getPermisos()
+    getUsuarios()
     {
         return this.axios.get(`${this.baseUrl}`);
     }
 
-    savePermiso(data)
+    saveUsuario(data)
     {
         return this.axios.post(`${this.baseUrl}`, data);
     }
     
-    editPermiso(id)
+    editUsuario(id)
     {
         return this.axios.get(`${this.baseUrl}/`+id+`/edit`);
     }
 
-    updatePermiso(data)
+    updateUsuario(data)
     {
         return this.axios.put(`${this.baseUrl}/${data.id}`,data);
     }
 
-    deletePermiso(id)
+    deleteUsuario(id)
     {
         return this.axios.delete(`${this.baseUrl}/${id}`);
     }
 
-    getPadres()
+    editRoles(id)
     {
-        return this.axios.get(`${this.url}/api/padres`);
+        return this.axios.get(`${this.url}/api/usuarios-roles/${id}`);
     }
-
-    getPermisosPorTitulo()
+    updateRoles(data)
     {
-        return this.axios.get(`${this.url}/api/permisos-titulo`);
+        return this.axios.post(`${this.url}/api/usuarios-roles`,data);
     }
 }
 
-export default PermisoService
+export default UsuarioService

@@ -12,7 +12,15 @@ import login from '@/components/auth/LoginComponent';
 
 /* Importación de componentes del menu de acceso */
 import permiso from '@/components/acceso/permiso/Inicio';
+
 import rol from '@/components/acceso/rol/Inicio';
+import rolNuevo from '@/components/acceso/rol/Nuevo';
+import rolEditar from '@/components/acceso/rol/Editar';
+
+import usuario from '@/components/acceso/usuario/Inicio';
+import usuarioNuevo from '@/components/acceso/usuario/Nuevo';
+import usuarioEditar from '@/components/acceso/usuario/Editar';
+import usuarioRoles from '@/components/acceso/usuario/Roles';
 
 Vue.use(VueRouter)
 
@@ -23,7 +31,15 @@ const routes = [
 
   /* Rutas del menu de acceso */
   {path:'/permisos', name:'permiso', component:permiso, meta: { middleware: [auth] }},
+
   {path:'/roles', name:'rol', component:rol, meta: { middleware: [auth] }},
+  {path:'/roles/nuevo', name:'rolNuevo', component:rolNuevo, meta: { middleware: [auth] }},
+  {path:'/roles/editar/:id', name:'rolEditar', component:rolEditar, meta: { middleware: [auth] }},
+
+  {path:'/usuarios', name:'usuario', component:usuario, meta: { middleware: [auth] }},
+  {path:'/usuarios/nuevo', name:'usuarioNuevo', component:usuarioNuevo, meta: { middleware: [auth] }},
+  {path:'/usuarios/editar/:id', name:'usuarioEditar', component:usuarioEditar, meta: { middleware: [auth] }},
+  {path:'/usuarios/roles/:id', name:'usuarioRoles', component:usuarioRoles, meta: { middleware: [auth] }},
 ];
 
 const router = new VueRouter({

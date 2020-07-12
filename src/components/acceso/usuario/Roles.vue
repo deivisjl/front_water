@@ -10,26 +10,19 @@
                         </v-row>
                     </v-toolbar>
                     <v-card-text style="margin-top:10px">
-                        <v-form :autocomplete="'off'" ref="form" lazy-validation>
-
-                            <v-text-field outlined dense autofocus v-model="model.nombre"  label="Nombre"></v-text-field>
-
-                            <v-text-field outlined dense v-model="model.descripcion"  label="Descripción"></v-text-field>
-                        </v-form>
+                        <v-list-item-group dense class="py-0">
+                            <v-list-item v-for="(item,i) in items" :key="i" style="padding: 1 16px" dense>
+                                <v-list-item-content style="padding: 1px">
+                                <v-checkbox 
+                                            v-model="opc"
+                                            :checked="item.checked"
+                                            :value="item.id"
+                                            :label="descripcion(item)">
+                                        </v-checkbox>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </v-list-item-group>
                     </v-card-text>
-                    <v-divider></v-divider>
-                    <v-list-item-group dense class="py-0">
-                        <v-list-item v-for="(item,i) in items" :key="i" style="padding: 1 16px" dense>
-                            <v-list-item-content style="padding: 1px">
-                               <v-checkbox 
-                                        v-model="opc"
-                                        :checked="item.checked"
-                                        :value="item.id"
-                                        :label="descripcion(item)">
-                                    </v-checkbox>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list-item-group>
 
                     <v-divider></v-divider>
 
@@ -63,9 +56,7 @@ import loading from "../../shared/loading"
 
         model:{
           id:'',
-          nombre:'',
-          descripcion:'',
-          permisos:[]
+          roles:[]
         },
         items:[],
         opc:[]
@@ -75,44 +66,43 @@ import loading from "../../shared/loading"
       
     },
     created(){
-      this.obtener_rol()
+      this.obtener_roles_usuario()
     },
     methods:{
         descripcion(item){
-            return (item.titulo+' ('+ item.descripcion +')')
+            return (item.nombre+' ('+ item.descripcion +')')
         },
-        obtener_rol()
+        obtener_roles_usuario()
         {
             this.loader = true
-            this.$store.state.services.rolService
-                .editRol(this.$route.params.id)
+            this.model.id = this.$route.params.id
+
+            this.$store.state.services.usuarioService
+                .editRoles(this.$route.params.id)
                 .then(r=>{
                     this.loader = false
-                    this.model.id = r.data.id
-                    this.model.nombre = r.data.nombre
-                    this.model.descripcion = r.data.descripcion
-                    this.model.permisos = r.data.permiso_rol
-                    this.obtener_permisos()
+                    this.model.roles = r.data
+                    this.obtener_roles()
                 })
                 .catch(error=>{
                     this.loader = false
                 })
         },
-        obtener_permisos(){
+        obtener_roles(){
             this.loader = true
-            this.$store.state.services.permisoService
-                .getPermisosPorTitulo()
+            this.$store.state.services.rolService
+                .getRoles()
                 .then(r=>{
                     this.loader = false
-                    let permisos = this.agregar_check(r.data)
-                    this.items = this.verificar_check(permisos)
+                    let roles = this.agregar_check(r.data)
+                    this.items = this.verificar_check(roles)
                 })
                 .catch(error=>{
                     this.loader = false
                 })
         },
         agregar_check(data){
-            this.model.permisos.forEach(function(item){
+            this.model.roles.forEach(function(item){
 		    	item.checked = false
             })
             
@@ -120,11 +110,11 @@ import loading from "../../shared/loading"
         },
 
         verificar_check(data){
-            let habilitado = this.model.permisos
+            let habilitado = this.model.roles
             
             for (let index = 0; index < data.length; index++) {
                 for (let indice = 0; indice < habilitado.length; indice++) {
-                    if(habilitado[indice].permiso_id === data[index].id)
+                    if(habilitado[indice].rol_id === data[index].id)
                     {
                         data[index].checked = true
                         this.opc.push(data[index].id)
@@ -138,17 +128,15 @@ import loading from "../../shared/loading"
             
           let datos = {
             'id':this.model.id,
-            'nombre':this.model.nombre,
-            'descripcion':this.model.descripcion,
-            'permisos':this.opc
+            'roles':this.opc
           }
           this.loader = true
-          this.$store.state.services.rolService
-                .updateRol(datos)
+          this.$store.state.services.usuarioService
+                .updateRoles(datos)
                 .then(r=>{
                     this.loader = false
                     toastr.success(this.$t('message_result_edit_success'),this.$t('message_title_global'))
-                    this.$router.push({path:`/roles`})                    
+                    this.$router.push({path:`/usuarios`})                    
                 })
                 .catch(error=>{
                    this.loader = false
@@ -156,7 +144,7 @@ import loading from "../../shared/loading"
                 })
         },
         cancelar(){
-            this.$router.push({path:`/roles`})
+            this.$router.push({path:`/usuarios`})
         }
     }
   }
