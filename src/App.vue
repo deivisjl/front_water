@@ -67,7 +67,7 @@
       </v-navigation-drawer>
 		<!--  -->
 
-		<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
+		<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark v-if="isloggedin">
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 			<v-toolbar-title style="width: 300px" class="ml-0 pl-4">
 				<span class="hidden-sm-and-down">SISCAP</span>
@@ -112,7 +112,7 @@
 			</v-container>
 		</v-main>
 		<template>
-			<v-card>
+			<v-card v-if="isloggedin">
 				<v-footer darken color="primary">
 					<v-col class="text-center white--text pt-0" cols="12">
 						siscapIT &copy;{{ new Date().getFullYear() }}
@@ -131,13 +131,21 @@ export default {
   components:{
     
   },
-
+  mounted(){
+    this.reload = true
+    this.event_obtener_menu(true)
+  },  
   created(){
+    events.$on('obtener_menu', this.event_obtener_menu)
      this.menu = this.$store.state.services.loginService.getStorageMenu()
+  },
+  beforeDestroy() {
+    events.$off('obtener_menu', this.event_obtener_menu)
   },
 	data: () => ({
 		dialog: false,
     drawer: null,
+    reload: false,
     menu:[],
     icon: 'keyboard_arrow_up','icon-alt': 'keyboard_arrow_down',
 		items: [
@@ -180,6 +188,15 @@ export default {
         background: false,
   }),
   methods:{
+    event_obtener_menu(data){
+      !this.reload ? this.setear_menu() : this.setear_menu()
+    },
+    setear_menu(){
+        let datos = JSON.parse(localStorage.getItem("SISCAP_MENU"))
+        this.$store.dispatch("setMenu",datos)
+        this.menu = datos
+        this.reload = false
+    },
     logout(){
        this.$store.state.services.loginService.logout()
        this.$router.push('login')
@@ -188,14 +205,7 @@ export default {
 
   computed:{
       isloggedin: function(){
-        if(this.$store.state.services.loginService.existingValidToken() || this.$store.state.services.loginService.verifyAuthCredentials())
-        {
-          return true
-        }
-        else
-        {
-          return false
-        }
+        return !_.isEmpty(this.$store.state.menu) ? true : false
       }
   },
 };

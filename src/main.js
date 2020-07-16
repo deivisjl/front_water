@@ -13,12 +13,19 @@ import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+import _ from 'lodash'
+
+window.auth_siscap = false
+
 const options = {
   confirmButton: 'primary',
   cancelButtonColor: '#ff5252',
   confirmButtonText: "Confirmar",
   cancelButtonText: "Cancelar"
 }
+
+//lodash
+Vue.use(_)
 
 Vue.use(VueSweetalert2,options);
 

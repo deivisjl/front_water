@@ -34,7 +34,7 @@ class LoginService {
     {   
         return new Promise((resolve,reject)=>{
             let refresh_token = this.getRefreshToken()
-            console.log("Refrescando")
+            
             if(!this.existingValidToken() && !refresh_token)
             {
                 this.logout()
@@ -66,13 +66,12 @@ class LoginService {
     }
 
     logout(){
-        store.state.user.loggedIn = false
+        store.dispatch("setMenu",[])
         this.removeCredentials()
     }
 
     storeCredentials(data){
         localStorage.setItem(this.SISCAP_AUTH, JSON.stringify(data))
-        store.state.user.loggedIn = true
     }
 
     existingValidToken(){

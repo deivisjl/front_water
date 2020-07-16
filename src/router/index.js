@@ -4,6 +4,7 @@ import store from '../store'
 /* Importar middleware */
 import guest from './middleware/guest'
 import auth from './middleware/auth'
+import menu from './middleware/menu'
 import middlewarePipeline from './middleware/middlewarePipeline'
 
 /* Importacion de componentes hacia las rutas */
@@ -30,16 +31,16 @@ const routes = [
   {path:'/', name:'home', component:home, meta: { middleware: [auth] }},
 
   /* Rutas del menu de acceso */
-  {path:'/permisos', name:'permiso', component:permiso, meta: { middleware: [auth] }},
+  {path:'/permisos', name:'permiso', component:permiso, meta: { middleware: [auth,menu] }},
 
-  {path:'/roles', name:'rol', component:rol, meta: { middleware: [auth] }},
-  {path:'/roles/nuevo', name:'rolNuevo', component:rolNuevo, meta: { middleware: [auth] }},
-  {path:'/roles/editar/:id', name:'rolEditar', component:rolEditar, meta: { middleware: [auth] }},
+  {path:'/roles', name:'rol', component:rol, meta: { middleware: [auth,menu] }},
+  {path:'/roles/nuevo', name:'rolNuevo', component:rolNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/roles/editar/:id', name:'rolEditar', component:rolEditar, meta: { middleware: [auth,menu] }},
 
-  {path:'/usuarios', name:'usuario', component:usuario, meta: { middleware: [auth] }},
-  {path:'/usuarios/nuevo', name:'usuarioNuevo', component:usuarioNuevo, meta: { middleware: [auth] }},
-  {path:'/usuarios/editar/:id', name:'usuarioEditar', component:usuarioEditar, meta: { middleware: [auth] }},
-  {path:'/usuarios/roles/:id', name:'usuarioRoles', component:usuarioRoles, meta: { middleware: [auth] }},
+  {path:'/usuarios', name:'usuario', component:usuario, meta: { middleware: [auth,menu] }},
+  {path:'/usuarios/nuevo', name:'usuarioNuevo', component:usuarioNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/usuarios/editar/:id', name:'usuarioEditar', component:usuarioEditar, meta: { middleware: [auth,menu] }},
+  {path:'/usuarios/roles/:id', name:'usuarioRoles', component:usuarioRoles, meta: { middleware: [auth,menu] }},
 ];
 
 const router = new VueRouter({

@@ -2,43 +2,44 @@
 <v-container class="fluid fill-height">
         <loading v-if="loader"></loading>
         <v-layout class="justify-center">
-            <v-flex class="xs12 sm8 md4">
-                <v-card class="elevation-12">
-                    <v-toolbar dark color="primary">
-                        <v-row align="center" justify="center">
-                            <v-toolbar-title>{{ $t('login_title_bar')}} - SISCAP</v-toolbar-title>
-                        </v-row>
-                    </v-toolbar>
-                    <v-card-text>
-                        <v-form :autocomplete="'off'" ref="form">
-                            <v-text-field 
-                                    style="margin-bottom: 10px"
-                                    autofocus
+                <v-flex class="xs12 sm8 md4">
+                    <v-card class="elevation-12">
+                        <v-toolbar dark color="primary">
+                            <v-row align="center" justify="center">
+                                <v-toolbar-title>{{ $t('login_title_bar')}} - SISCAP</v-toolbar-title>
+                            </v-row>
+                        </v-toolbar>
+                        <v-card-text>
+                            <v-form :autocomplete="'off'" ref="form">
+                                <v-text-field 
+                                        style="margin-bottom: 10px"
+                                        autofocus
+                                        outlined
+                                        dense
+                                        prepend-icon="person" 
+                                        :label="$t('login_placeholder_username')" 
+                                        hide-details="auto" v-model="form.email"></v-text-field>
+                                
+                                <v-text-field
                                     outlined
-                                    dense
-                                    prepend-icon="person" 
-                                    :label="$t('login_placeholder_username')" 
-                                    hide-details="auto" v-model="form.email"></v-text-field>
-                            
-                            <v-text-field
-                                outlined
-                                dense 
-                                prepend-icon="lock" 
-                                :label="$t('login_placeholder_password')" 
-                                :type="showPassword ? 'text' : 'password'" 
-                                append-icon="visibility_off" 
-                                @click:append="showPassword = !showPassword"
-                                v-model="form.password">
-                            </v-text-field>
-                        </v-form>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="primary" @click="validar">{{ $t('login_btn_title') }}</v-btn>
-                        </v-card-actions>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
-        </v-layout>
+                                    dense 
+                                    prepend-icon="lock" 
+                                    :label="$t('login_placeholder_password')" 
+                                    :type="showPassword ? 'text' : 'password'" 
+                                    append-icon="visibility_off" 
+                                    @click:append="showPassword = !showPassword"
+                                    v-model="form.password"
+                                    @keydown.enter="validar">
+                                </v-text-field>
+                            </v-form>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" @click="validar">{{ $t('login_btn_title') }}</v-btn>
+                            </v-card-actions>
+                        </v-card-text>
+                    </v-card>
+                </v-flex>
+            </v-layout>
     </v-container>
 </template>
 <script>
@@ -92,7 +93,6 @@ export default {
                 }
             })
             .catch(error =>{
-                console.log(error)
                 this.loader = false
             })
       },
@@ -103,6 +103,7 @@ export default {
             .then(r=>{
                 this.loader = false
                 this.$store.state.services.loginService.storeMenu(r.data)
+                events.$emit("obtener_menu",true)
                 this.$router.push({ name: "home" });
             })
             .catch(error =>{
@@ -112,3 +113,14 @@ export default {
   }
 }
 </script>
+<style>
+    /* .box{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .box .layout {
+        width: 100px;
+        height: 100px;
+    } */
+</style>

@@ -9,6 +9,20 @@ const state ={
   services,
   user: {
     loggedIn: false
+  },
+  menu:[]
+},
+
+mutations = {
+  setMenu(state, menu) {
+    state.menu = []
+    state.menu = menu
+  },
+},
+
+actions = {
+  setMenu({ commit }, menu) {
+    commit("setMenu", menu)
   }
 }
 
@@ -21,10 +35,8 @@ const getters = {
 export default new Vuex.Store({
   state,
   getters,
-  mutations: {
-  },
-  actions: {
-  },
+  mutations,
+  actions,
   modules: {
   }
 })
