@@ -139,6 +139,9 @@ export default {
     events.$off("postEditarRegistro", this.onEventRegistro)
   },
   methods:{
+    // busqueda_personalizada(items, search, filter){
+    //     console.log(search)
+    // },
     nuevo(){
        this.nuevo_registro = true
     },

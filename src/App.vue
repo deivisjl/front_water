@@ -67,7 +67,7 @@
       </v-navigation-drawer>
 		<!--  -->
 
-		<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark v-if="isloggedin">
+		<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark >
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 			<v-toolbar-title style="width: 300px" class="ml-0 pl-4">
 				<span class="hidden-sm-and-down">SISCAP</span>
@@ -78,7 +78,7 @@
 			</v-btn> -->
       <!--  -->
         
-        <v-menu bottom offset-y>
+        <v-menu bottom offset-y v-if="isloggedin">
           <template v-slot:activator="{on}">
             <v-btn icon v-on="on" dark>
               <v-list-item-avatar>
@@ -137,10 +137,12 @@ export default {
   },  
   created(){
     events.$on('obtener_menu', this.event_obtener_menu)
+    events.$on('eliminar_menu', this.event_eliminar_menu)
      this.menu = this.$store.state.services.loginService.getStorageMenu()
   },
   beforeDestroy() {
     events.$off('obtener_menu', this.event_obtener_menu)
+    events.$on('eliminar_menu', this.event_eliminar_menu)
   },
 	data: () => ({
 		dialog: false,
@@ -148,48 +150,19 @@ export default {
     reload: false,
     menu:[],
     icon: 'keyboard_arrow_up','icon-alt': 'keyboard_arrow_down',
-		items: [
-        { icon: 'home', text: 'Inicio' },
-        { icon: 'contacts', text: 'Contacts' },
-        { icon: 'history', text: 'Frequently contacted' },
-        { icon: 'content_copy', text: 'Duplicates' },
-        {
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: 'Labels',
-          model: true,
-          children: [
-            { icon: 'add', text: 'Create label' },
-          ],
-        },
-        {
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: 'More',
-          model: false,
-          children: [
-            { text: 'Import' },
-            { text: 'Export' },
-            { text: 'Print' },
-            { text: 'Undo changes' },
-            { text: 'Other contacts' },
-          ],
-        },
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'chat_bubble', text: 'Send feedback' },
-        { icon: 'contact_support', text: 'Help' },
-        { icon: 'devices', text: 'App downloads' },
-        { icon: 'keyboard', text: 'Go to the old version' },
-      ],		
-        right: false,
-        permanent: false,
-        miniVariant: false,
-        expandOnHover: false,
-        background: false,
+    right: false,
+    permanent: false,
+    miniVariant: false,
+    expandOnHover: false,
+    background: false,
   }),
   methods:{
     event_obtener_menu(data){
       !this.reload ? this.setear_menu() : this.setear_menu()
+    },
+    event_eliminar_menu(data){
+      this.menu = []
+      this.$store.dispatch("setMenu",[])
     },
     setear_menu(){
         let datos = JSON.parse(localStorage.getItem("SISCAP_MENU"))

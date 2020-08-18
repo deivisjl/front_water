@@ -1,8 +1,10 @@
-export default function guest ({ next, store }){
+import router from '../'
+
+export default function auth ({ next, store }){
     if(store.state.services.loginService.verifyAuthCredentials()){
-        return next({
-           name: 'home'
-        })
-    }   
-    return next()
+        return router.push('/').catch(err => {})
+    }
+    else{
+    	return next()
+    }
 }

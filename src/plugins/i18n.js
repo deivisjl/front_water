@@ -59,8 +59,8 @@ const messages = {
                 };
 
 export let i18n = new VueI18n({
-    locale: 'en', // set locale
-    fallbackLocale: 'es', // set fallback locale
+    locale: 'es', // set locale
+    fallbackLocale: 'en', // set fallback locale
     messages, // set locale messages
     silentTranslationWarn: process.env.NODE_ENV === 'production'
     });

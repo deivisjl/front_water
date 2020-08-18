@@ -32,41 +32,39 @@ class LoginService {
     
     refreshToken()
     {   
-        return new Promise((resolve,reject)=>{
-            let refresh_token = this.getRefreshToken()
-            
-            if(!this.existingValidToken() && !refresh_token)
-            {
-                this.logout()
-                return false
-            }
-            
-            let datos = {
-                'grant_type':this.credentials.GRANT_TYPE_REFRESH,
-                'client_id':this.credentials.CLIENT_ID,
-                'client_secret':this.credentials.CLIENT_SECRET,
-                'refresh_token':refresh_token
-            }
-            this.axios.post(`${this.baseUrl}`,datos)
-                .then(r => {
-                    let timestamps = this.convertToUnixDate(r.data.expires_in)
-                    let auth = {
-                        'token_expires_at':timestamps,
-                        'access_token':r.data.token_type + ' ' + r.data.access_token,
-                        'refresh_token':r.data.refresh_token
-                    }
-                    this.storeCredentials(auth)
+        let refresh_token = this.getRefreshToken()
 
-                    resolve(this.existingValidToken())
-                })
-                .catch(error => {
-                    reject(false)
-                });
-        });
+        if(!this.existingValidToken() && !refresh_token)
+        {
+            this.logout()
+            return false
+        }
+
+         let datos = {
+            'grant_type':this.credentials.GRANT_TYPE_REFRESH,
+            'client_id':this.credentials.CLIENT_ID,
+            'client_secret':this.credentials.CLIENT_SECRET,
+            'refresh_token':refresh_token
+        }
+
+        return datos
+    }
+
+    formatRefresh(data)
+    {
+        let timestamps = this.convertToUnixDate(data.expires_in)
+        let auth = {
+            'token_expires_at':timestamps,
+            'access_token':data.token_type + ' ' + data.access_token,
+            'refresh_token':data.refresh_token
+        }
+
+        return auth
     }
 
     logout(){
         store.dispatch("setMenu",[])
+        events.$emit("eliminar_menu",false)
         this.removeCredentials()
     }
 
