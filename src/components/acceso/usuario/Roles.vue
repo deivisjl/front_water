@@ -91,7 +91,7 @@ import loading from "../../shared/loading"
         obtener_roles(){
             this.loader = true
             this.$store.state.services.rolService
-                .getRoles()
+                .getAllRoles()
                 .then(r=>{
                     this.loader = false
                     let roles = this.agregar_check(r.data)

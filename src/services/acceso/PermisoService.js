@@ -10,9 +10,10 @@ class PermisoService {
         this.url = baseUrl
     }
 
-    getPermisos()
+    getPermisos(data)
     {
-        return this.axios.get(`${this.baseUrl}`);
+        return this.axios.get(`${this.baseUrl}?sortBy=${data.sortBy}&sortDesc=${data.sortDesc}&perPage=${data.perPage}&page=${data.page}&search=${data.search}`);
+
     }
 
     savePermiso(data)

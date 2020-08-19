@@ -3,9 +3,16 @@
     <loading v-if="loader"></loading>
         <v-container fluid>
         <v-data-table
+                :page="page"
+                :options.sync="options"
+                :server-items-length="totalRegistros"
+                :footer-props="{
+                  'items-per-page-options': [5, 10, 15, 20], 
+                  'items-per-page-text':$t('vuetify.dataFooter.itemsPerPageText'),
+                  'page-text':$t('vuetify.dataFooter.pageText')
+                }"
                 :headers="cabeceras"
                 :items="items"
-                :search="buscar"
                 :single-select="singleSelect"
                 v-model="selected"
                 show-select
@@ -32,7 +39,7 @@
                     <v-toolbar flat color="white">
                     <v-toolbar-title>Usuarios</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details>
+                    <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details v-on:keyup.enter="busqueda">
                         <v-icon slot="append">search</v-icon>
                     </v-text-field>
                     <v-spacer></v-spacer>
@@ -114,6 +121,12 @@ export default {
         loading
     },
   data: () => ({
+    page: 1,//
+    totalRegistros: 0,//
+    pagination:[5,10,15],//
+    sincronizar:true,//
+    options: {},//
+
     loader:false,
     dialog: false,
     buscar:'',
@@ -130,26 +143,56 @@ export default {
     items:[]
   }),
   mounted(){
-    
-  },
-  created(){    
     this.obtener_usuarios()
   },
+  created(){    
+    
+  },
+  watch: {
+    options: {
+      handler() {
+        if(this.items.length > 0 && this.sincronizar)
+        {
+          this.obtener_usuarios();
+        }
+      },
+    },
+    deep: true,
+  },
   methods:{
+    busqueda(){
+      this.sincronizar = false
+      this.obtener_usuarios()
+    },
     nuevo(){
        this.$router.push({path:`usuarios/nuevo`});
     },
     recargar(){
+      this.sincronizar = false
       this.obtener_usuarios()
       this.selected=[]
     },
     obtener_usuarios(){
       this.loader = true
+      const { sortBy, sortDesc, page, itemsPerPage } = this.options;
+      
+      let pageNumber = page - 1;
+
+      let datos = {
+          'perPage':itemsPerPage,
+          'page':pageNumber === 0 ? 0 : (pageNumber + itemsPerPage - 1),
+          'sortBy':sortBy,
+          'sortDesc':sortDesc,
+          'search':this.buscar
+      }
+
        this.$store.state.services.usuarioService
-        .getUsuarios()
+        .getUsuarios(datos)
         .then(r=>{
             this.loader = false
-            this.items = r.data
+            this.items = r.data.data
+            this.sincronizar = true;
+            this.totalRegistros = r.data.total;
         })
         .catch(error => {
           this.loader = false

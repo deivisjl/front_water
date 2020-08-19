@@ -29,6 +29,17 @@ const messages = {
                         message_result_delete_success:'Record deleted successfully',
                         message_result_error:'An error ocurred: ',
 
+                        vuetify: {
+                            dataFooter: {
+                                itemsPerPageText: 'Items per page:',
+                                itemsPerPageAll: 'All',
+                                nextPage: 'Next page',
+                                prevPage: 'Previous page',
+                                firstPage: 'First page',
+                                lastPage: 'Last page',
+                                pageText: '{0}-{1} of {2}',
+                              },
+                        }
                     }, 
                     'es':{
                         login_btn_title:'Ingresar',
@@ -55,6 +66,19 @@ const messages = {
                         message_result_edit_success:'Registro actualizado con éxito',
                         message_result_delete_success:'Registro eliminado con éxito',
                         message_result_error:'Ocurrió un error: ',
+
+                        vuetify:{
+                            dataFooter: {
+                                itemsPerPageText: 'Filas por página',
+                                itemsPerPageAll: 'Todos',
+                                nextPage: 'Página siguiente',
+                                prevPage: 'Página anterior',
+                                firstPage: 'Primer página',
+                                lastPage: 'Última página',
+                                pageText: '{0}-{1} de {2}',
+                              },
+                        }
+
                     }
                 };
 

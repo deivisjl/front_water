@@ -10,9 +10,9 @@ class UsuarioService {
         this.url = baseUrl
     }
 
-    getUsuarios()
+    getUsuarios(data)
     {
-        return this.axios.get(`${this.baseUrl}`);
+        return this.axios.get(`${this.baseUrl}?sortBy=${data.sortBy}&sortDesc=${data.sortDesc}&perPage=${data.perPage}&page=${data.page}&search=${data.search}`);
     }
 
     saveUsuario(data)

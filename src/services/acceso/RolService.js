@@ -10,9 +10,9 @@ class RolService {
         this.url = baseUrl
     }
 
-    getRoles()
+    getRoles(data)
     {
-        return this.axios.get(`${this.baseUrl}`);
+        return this.axios.get(`${this.baseUrl}?sortBy=${data.sortBy}&sortDesc=${data.sortDesc}&perPage=${data.perPage}&page=${data.page}&search=${data.search}`);
     }
 
     saveRol(data)
@@ -33,6 +33,10 @@ class RolService {
     deleteRol(id)
     {
         return this.axios.delete(`${this.baseUrl}/${id}`);
+    }
+    getAllRoles(data)
+    {
+        return this.axios.get(`${this.url}/api/roles-obtener`);
     }
 }
 

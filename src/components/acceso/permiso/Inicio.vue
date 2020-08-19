@@ -3,9 +3,16 @@
     <loading v-if="loader"></loading>
         <v-container fluid>
         <v-data-table
+                :page="page"
+                :options.sync="options"
+                :server-items-length="totalRegistros"
+                :footer-props="{
+                  'items-per-page-options': [5, 10, 15, 20], 
+                  'items-per-page-text':$t('vuetify.dataFooter.itemsPerPageText'),
+                  'page-text':$t('vuetify.dataFooter.pageText')
+                }"
                 :headers="cabeceras"
-                :items="permisos"
-                :search="buscar"
+                :items="items"
                 :single-select="singleSelect"
                 v-model="selected"
                 show-select
@@ -32,7 +39,7 @@
                     <v-toolbar flat color="white">
                     <v-toolbar-title>Permisos</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details>
+                    <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details v-on:keyup.enter="busqueda">
                         <v-icon slot="append">search</v-icon>
                     </v-text-field>
                     <v-spacer></v-spacer>
@@ -108,7 +115,13 @@ export default {
         nuevoRegistro,
         editarRegistro
     },
-  data: () => ({
+  data: () => ({    
+    page: 1,//
+    totalRegistros: 0,//
+    pagination:[5,10,15],//
+    sincronizar:true,//
+    options: {},//
+
     loader:false,
     dialog: false,
     buscar:'',
@@ -123,15 +136,26 @@ export default {
       { text: 'Icono', value: 'icono' },
       { text: 'Descripción', value: 'descripcion' }
     ],
-    permisos:[]
+    items:[]
   }),
   mounted(){
-    
+    this.obtener_permisos()
+  },
+
+  watch: {
+    options: {
+      handler() {
+        if(this.items.length > 0 && this.sincronizar)
+        {
+          this.obtener_permisos();
+        }
+      },
+    },
+    deep: true,
   },
   created(){
     events.$on("postNuevoRegistro", this.onEventRegistro)
     events.$on("postEditarRegistro", this.onEventRegistro)
-    this.obtener_permisos()
   },
 
   beforeDestroy() {
@@ -139,23 +163,39 @@ export default {
     events.$off("postEditarRegistro", this.onEventRegistro)
   },
   methods:{
-    // busqueda_personalizada(items, search, filter){
-    //     console.log(search)
-    // },
+    busqueda(){
+      this.sincronizar = false
+      this.obtener_permisos()
+    },
     nuevo(){
        this.nuevo_registro = true
     },
     recargar(){
+      this.sincronizar = false
       this.obtener_permisos()
       this.selected=[]
     },
     obtener_permisos(){
       this.loader = true
+      const { sortBy, sortDesc, page, itemsPerPage } = this.options;
+      
+      let pageNumber = page - 1;
+
+      let datos = {
+          'perPage':itemsPerPage,
+          'page':pageNumber === 0 ? 0 : (pageNumber + itemsPerPage - 1),
+          'sortBy':sortBy,
+          'sortDesc':sortDesc,
+          'search':this.buscar
+      }
+
        this.$store.state.services.permisoService
-        .getPermisos()
+        .getPermisos(datos)
         .then(r=>{
             this.loader = false
-            this.permisos = r.data
+            this.items = r.data.data
+            this.sincronizar = true;
+            this.totalRegistros = r.data.total;
         })
         .catch(error => {
           this.loader = false
