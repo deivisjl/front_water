@@ -10,7 +10,8 @@ const state ={
   user: {
     loggedIn: false
   },
-  menu:[]
+  menu:[],
+  permisos:[]
 },
 
 mutations = {
@@ -18,11 +19,18 @@ mutations = {
     state.menu = []
     state.menu = menu
   },
+  setPermisos(state, permisos) {
+    state.permisos = []
+    state.permisos = permisos
+  },
 },
 
 actions = {
   setMenu({ commit }, menu) {
     commit("setMenu", menu)
+  },
+  setPermisos({ commit }, permisos) {
+    commit("setPermisos", permisos)
   }
 }
 

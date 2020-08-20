@@ -124,6 +124,8 @@
 </template>
 <script>
 
+import menu from '@/plugins/utils'
+
 export default {
 	props: {
 		source: String
@@ -165,9 +167,10 @@ export default {
       this.$store.dispatch("setMenu",[])
     },
     setear_menu(){
-        let datos = JSON.parse(localStorage.getItem("SISCAP_MENU"))
-        this.$store.dispatch("setMenu",datos)
-        this.menu = datos
+        menu.construir_menu()
+        menu.construir_permisos()
+
+        this.menu = this.$store.state.menu
         this.reload = false
     },
     logout(){

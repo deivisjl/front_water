@@ -16,9 +16,9 @@ const credentials = {
   GRANT_TYPE: 'password',
   GRANT_TYPE_REFRESH: 'refresh_token',
   CLIENT_ID: '1',
-  CLIENT_SECRET: 'a4vjRLopDm1ePznpY4fifo3VEkLXO1tQT3kgf1n7'
-  //CLIENT_ID: '3',
-  //CLIENT_SECRET: 'b2dPP5V0OZ3veiqgMmNZWmVkTidRF5tr39KwW7wy'
+  CLIENT_SECRET: 'pfVyZq0F2RHj1kJWqDgk4JSLScs1I0cvew6gxLlw'
+  //CLIENT_ID: '6',
+  //CLIENT_SECRET: '2U3ZoWdT6qvWmUvdwmKwP9X7ZxYFndw9o3MACAhp'
 }
 
 const instance = Axios.create();
