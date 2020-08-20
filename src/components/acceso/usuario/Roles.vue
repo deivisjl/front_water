@@ -102,8 +102,9 @@ import loading from "../../shared/loading"
                 })
         },
         agregar_check(data){
-            this.model.roles.forEach(function(item){
-		    	item.checked = false
+            /*Agregar a todos los roles la bandera de checked*/
+            data.forEach(function(item){
+                item.checked = false
             })
             
             return data
@@ -136,7 +137,7 @@ import loading from "../../shared/loading"
                 .then(r=>{
                     this.loader = false
                     toastr.success(this.$t('message_result_edit_success'),this.$t('message_title_global'))
-                    this.$router.push({path:`/usuarios`})                    
+                    this.$router.push({path:`/usuarios-rol`})                    
                 })
                 .catch(error=>{
                    this.loader = false
@@ -144,7 +145,7 @@ import loading from "../../shared/loading"
                 })
         },
         cancelar(){
-            this.$router.push({path:`/usuarios`})
+            this.$router.push({path:`/usuarios-rol`})
         }
     }
   }

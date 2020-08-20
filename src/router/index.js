@@ -19,8 +19,6 @@ import rolNuevo from '@/components/acceso/rol/Nuevo';
 import rolEditar from '@/components/acceso/rol/Editar';
 
 import usuario from '@/components/acceso/usuario/Inicio';
-import usuarioNuevo from '@/components/acceso/usuario/Nuevo';
-import usuarioEditar from '@/components/acceso/usuario/Editar';
 import usuarioRoles from '@/components/acceso/usuario/Roles';
 
 Vue.use(VueRouter)
@@ -37,10 +35,8 @@ const routes = [
   {path:'/roles/nuevo', name:'rolNuevo', component:rolNuevo, meta: { middleware: [auth,menu] }},
   {path:'/roles/editar/:id', name:'rolEditar', component:rolEditar, meta: { middleware: [auth,menu] }},
 
-  {path:'/usuarios', name:'usuario', component:usuario, meta: { middleware: [auth,menu] }},
-  {path:'/usuarios/nuevo', name:'usuarioNuevo', component:usuarioNuevo, meta: { middleware: [auth,menu] }},
-  {path:'/usuarios/editar/:id', name:'usuarioEditar', component:usuarioEditar, meta: { middleware: [auth,menu] }},
-  {path:'/usuarios/roles/:id', name:'usuarioRoles', component:usuarioRoles, meta: { middleware: [auth,menu] }},
+  {path:'/usuarios-rol', name:'usuario', component:usuario, meta: { middleware: [auth,menu] }},
+  {path:'/usuarios-rol/roles/:id', name:'usuarioRoles', component:usuarioRoles, meta: { middleware: [auth,menu] }},
 ];
 
 const router = new VueRouter({

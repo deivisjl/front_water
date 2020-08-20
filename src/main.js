@@ -18,8 +18,8 @@ import _ from 'lodash'
 window.auth_siscap = false
 
 const options = {
-  confirmButton: 'primary',
-  cancelButtonColor: '#ff5252',
+  cancelButtonColor: '#F44336',
+  confirmButtonColor: '#1565c0',
   confirmButtonText: "Confirmar",
   cancelButtonText: "Cancelar"
 }

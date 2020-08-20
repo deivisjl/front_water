@@ -16,7 +16,7 @@ const credentials = {
   GRANT_TYPE: 'password',
   GRANT_TYPE_REFRESH: 'refresh_token',
   CLIENT_ID: '1',
-  CLIENT_SECRET: 'pfVyZq0F2RHj1kJWqDgk4JSLScs1I0cvew6gxLlw'
+  CLIENT_SECRET: 'ys6fuFiwcL4LYAJYqSs7X1jgV4ubKvrdfBoa8T2n'
   //CLIENT_ID: '6',
   //CLIENT_SECRET: '2U3ZoWdT6qvWmUvdwmKwP9X7ZxYFndw9o3MACAhp'
 }

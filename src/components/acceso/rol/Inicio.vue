@@ -217,6 +217,9 @@ export default {
                               if(error.response.data.code === 423 || error.response.data.code === 409){
                                   toastr.error(this.$t('message_result_error') + error.response.data.error,this.$t('message_title_global'))     
                               }
+                              else if(error.response.status === 500){
+                                toastr.error(error.response.data.message,this.$t('message_result_error'))
+                              }
                               else{
                                   toastr.error(this.$t('message_result_error') + error,this.$t('message_title_global'))
                               }

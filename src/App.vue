@@ -16,10 +16,10 @@
           class="py-0"
         >
           <v-list dense>
-        <template v-for="item in menu">
+        <template v-for="(item, j) in menu">
           <v-list-group
             v-if="item.subgrupo"
-            :key="item.titulo"
+            :key="item.j"
             :prepend-icon="item.icono"
             :append-icon="item.subgrupo.size > 0 ? item.icono : icon"
             color="primary"

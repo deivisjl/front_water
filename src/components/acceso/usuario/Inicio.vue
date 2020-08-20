@@ -80,28 +80,6 @@
                                 </template>
                                 <span>{{ $t('miscelanius_rol_item') }}</span>
                               </v-tooltip>
-                              <v-icon v-if="unitario">more_vert</v-icon>
-                              <v-tooltip top v-if="unitario">
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on" @click="editar_usuario(selected[0])">
-                                    <v-avatar color="green" size="36">
-                                      <v-icon color="white darken-2">edit</v-icon>
-                                    </v-avatar>
-                                  </v-btn>
-                                </template>
-                                <span>{{ $t('miscelanius_edit_item') }}</span>
-                              </v-tooltip>
-                              <v-icon v-if="unitario">more_vert</v-icon>
-                              <v-tooltip top v-if="opciones">
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on"  @click="eliminar_usuario(selected[0])">
-                                    <v-avatar color="red" size="36">
-                                      <v-icon color="white darken-2">delete</v-icon>
-                                    </v-avatar>
-                                  </v-btn>
-                                </template>
-                                <span>{{ $t('miscelanius_delete_item') }}</span>
-                              </v-tooltip>
                           </v-toolbar>
                         </v-card>
                     <!--  -->
@@ -201,46 +179,9 @@ export default {
     editar_roles(data){
         if(data)
         {
-            this.$router.push({path:`usuarios/roles/`+data.id});
+            this.$router.push({path:`usuarios-rol/roles/`+data.id});
         }
-    },
-    editar_usuario(data){
-      if(data)
-      {
-        this.$router.push({path:`usuarios/editar/`+data.id});
-      }
-    },
-    eliminar_usuario(data){
-       this.$swal({
-		          title: "¿Desea eliminar el registro?",
-                  text: data.name,
-                  icon: "warning",
-                  showCancelButton: true,
-                  reverseButtons: true
-                })
-                .then(result =>{
-                    if(result.value)
-                    {
-                        this.loader = true
-                        this.$store.state.services.usuarioService
-                          .deleteRol(data.id)
-                          .then(r=>{
-                              this.loader = false
-                              toastr.success(this.$t('message_result_delete_success'),this.$t('message_title_global'))
-                              this.recargar()
-                          })
-                          .catch(error=>{
-                              this.loader = false
-                              if(error.response.data.code === 423 || error.response.data.code === 409){
-                                  toastr.error(this.$t('message_result_error') + error.response.data.error,this.$t('message_title_global'))     
-                              }
-                              else{
-                                  toastr.error(this.$t('message_result_error') + error,this.$t('message_title_global'))
-                              }
-                          })
-                    }
-                })
-    },
+    }
   },
   computed:{
     opciones(){
