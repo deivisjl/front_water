@@ -28,6 +28,13 @@ const messages = {
                         message_result_edit_success:'Record updated successfully',
                         message_result_delete_success:'Record deleted successfully',
                         message_result_error:'An error ocurred: ',
+                        message_result_login_error:'Invalid grants, try again',
+
+                        /*Validaciones vee-validate*/
+                        global_validation_required: '{field} is required',
+                        global_validation_valid: '{field} must be valid',
+                        global_validation_min: '{field} must contain at least {param} characters',
+                        global_validation_numeric:'{field} must be a number',
 
                         vuetify: {
                             dataFooter: {
@@ -66,6 +73,13 @@ const messages = {
                         message_result_edit_success:'Registro actualizado con éxito',
                         message_result_delete_success:'Registro eliminado con éxito',
                         message_result_error:'Ocurrió un error: ',
+                        message_result_login_error:'Credenciales inválidas, intente de nuevo',
+
+                        /*Validaciones vee-validate*/
+                        global_validation_required: '{field} es requerido(a)',
+                        global_validation_valid: '{field} debe ser válido(a)',
+                        global_validation_min: '{field} debe contener al menos {param} caracteres',
+                        global_validation_numeric:'{field} debe ser un número',
 
                         vuetify:{
                             dataFooter: {

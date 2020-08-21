@@ -12,9 +12,11 @@
                     <v-card-text style="margin-top:10px">
                         <v-form :autocomplete="'off'" ref="form" lazy-validation>
 
-                            <v-text-field outlined dense autofocus v-model="model.nombre"  label="Nombre"></v-text-field>
+                            <v-text-field outlined dense autofocus name="nombre" v-model="model.nombre" v-validate="'required'" label="Nombre"></v-text-field>
+                            <form-error :attribute_name="'nombre'" :errors_form="errors"> </form-error>
 
-                            <v-text-field outlined dense v-model="model.descripcion"  label="Descripción"></v-text-field>
+                            <v-text-field outlined dense name="descripcion" v-model="model.descripcion" v-validate="'required'" label="Descripción"></v-text-field>
+                            <form-error :attribute_name="'descripcion'" :errors_form="errors"> </form-error>
                         </v-form>
                     </v-card-text>
                     <v-divider></v-divider>
@@ -37,7 +39,7 @@
                         {{ $t('miscelanius_cancel_item') }}
                         </v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="guardar()">
+                    <v-btn color="primary" @click="validar()">
                         {{ $t('miscelanius_save_item') }}
                     </v-btn>
                     </v-card-actions>
@@ -49,10 +51,12 @@
 
 <script>
 import loading from "../../shared/loading"
+import FormError from "@/components/shared/FormError"
 
   export default {
     components:{
-        loading
+        loading,
+        FormError
     },
     data () {
       return {
@@ -69,12 +73,19 @@ import loading from "../../shared/loading"
       }
     },
     mounted(){
-      
+        this.config_error()
     },
     created(){
       this.obtener_permisos()
     },
     methods:{
+        validar(){
+        this.$validator.validateAll().then((result) =>{
+                if(result){
+                  this.guardar();
+                }             
+          });
+        },
         descripcion(item){
             return (item.titulo+' ('+ item.descripcion +')')
         },
@@ -119,7 +130,22 @@ import loading from "../../shared/loading"
         },
         cancelar(){
             this.$router.push({path:`/roles`})
-        }
+        },
+        config_error(){
+            let self = this
+               let dict = {
+                custom:{
+                  nombre:{
+                      required:this.$t('global_validation_required',{field:'El nombre'}),
+                  },
+                  descripcion:{
+                      required:this.$t('global_validation_required',{field:'La descripción'}),
+                  },
+                }
+               }
+
+              self.$validator.localize('es',dict);
+          },
     }
   }
 </script>

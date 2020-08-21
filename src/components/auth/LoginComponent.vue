@@ -12,25 +12,30 @@
                         <v-card-text>
                             <v-form :autocomplete="'off'" ref="form">
                                 <v-text-field 
+                                        v-validate="'required|email'"
                                         style="margin-bottom: 10px"
                                         autofocus
                                         outlined
                                         dense
-                                        prepend-icon="person" 
+                                        name="usuario"
                                         :label="$t('login_placeholder_username')" 
                                         hide-details="auto" v-model="form.email"></v-text-field>
-                                
+                                <FormError :attribute_name="'usuario'" :errors_form="errors"> </FormError>
                                 <v-text-field
+                                    v-validate="'required|min:5'"
+                                    style="margin-bottom: 10px"
                                     outlined
-                                    dense 
-                                    prepend-icon="lock" 
+                                    dense
+                                    name="password" 
                                     :label="$t('login_placeholder_password')" 
                                     :type="showPassword ? 'text' : 'password'" 
                                     append-icon="visibility_off" 
                                     @click:append="showPassword = !showPassword"
                                     v-model="form.password"
+                                    hide-details="auto"
                                     @keydown.enter="validar">
                                 </v-text-field>
+                                <FormError :attribute_name="'password'" :errors_form="errors"> </FormError>
                             </v-form>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -45,14 +50,16 @@
 <script>
 import loading from "../shared/loading"
 import moment from 'moment'
+import FormError from "@/components/shared/FormError"
 
 export default {
   name: 'Login',
   components:{
-    loading
+    loading,
+    FormError
   },
   data () {
-    return {
+    return {      
       showPassword: false,
       loader: false,
       form:{
@@ -61,6 +68,9 @@ export default {
       }
     }
   },
+  mounted(){
+      this.config_error()
+  },
   created(){
       let fecha = moment().add(3600,'second')
       /* console.log(fecha.format('DD-MM-YYYY HH:mm:ss')) */
@@ -68,6 +78,13 @@ export default {
   },
   methods:{
       validar(){
+        this.$validator.validateAll().then((result) =>{
+              if(result){
+                this.autenticar();
+              }             
+        });
+      },
+      autenticar(){
           this.loader = true
 
           let data = {
@@ -91,9 +108,18 @@ export default {
                     this.$store.state.services.loginService.storeCredentials(auth)
                     this.obtener_menu()
                 }
+                
             })
             .catch(error =>{
                 this.loader = false
+                if(_.includes(error.response.data.error,'invalid_grant'))
+                {
+                    toastr.error(this.$t('message_result_login_error'),this.$t('message_title_global'))
+                }
+                else
+                {
+                    toastr.error(this.$t('message_result_error') + error,this.$t('message_title_global'))
+                }
             })
       },
       obtener_menu(){
@@ -109,7 +135,25 @@ export default {
             .catch(error =>{
                 this.loader = false
             })
-      }
+      },
+      config_error(){
+            let self = this
+               let dict = {
+                custom:{
+                  usuario:{
+                    required:this.$t('global_validation_required',{field:'El nombre de usuario'}),
+                    email:this.$t('global_validation_valid',{field:'El correo electrónico'}),
+                  },
+                  password:{
+                    required:this.$t('global_validation_required',{field:'La contraseña'}),
+                    min: (field,params) => this.$t('global_validation_min',{field:'La contraseña',param:params[0]}),
+                  },  
+                  
+                }
+               }
+
+              self.$validator.localize('es',dict);
+          },
   }
 }
 </script>

@@ -216,4 +216,8 @@ export default {
   .swal2-title {
     font-size: 1.3rem!important;
   }
+
+  .validado{
+      line-height: 8px;
+  }
 </style>  

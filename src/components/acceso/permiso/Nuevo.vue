@@ -16,21 +16,32 @@
         <v-card-text style="margin-top:10px">
           <v-form :autocomplete="'off'" ref="form" lazy-validation>
 
-                <v-text-field outlined dense autofocus v-model="model.titulo"  label="Título"></v-text-field>
+                <v-text-field outlined dense autofocus v-model="model.titulo" 
+                      name="titulo" label="Título" v-validate="'required'" 
+                     ></v-text-field>
+                <form-error :attribute_name="'titulo'" :errors_form="errors"> </form-error>
 
-                <v-text-field outlined dense v-model="model.ruta"  label="Nombre de la ruta"></v-text-field>
+                <v-text-field outlined dense v-model="model.ruta" 
+                  name="ruta" label="Nombre de la ruta" v-validate="'required'" 
+                 ></v-text-field>
+                  <form-error :attribute_name="'ruta'" :errors_form="errors"> </form-error>
 
                 <v-text-field 
                     outlined dense
                     v-model="model.icono" 
-                    label="Icono" 
-                    :append-icon="model.icono" ></v-text-field>
+                    label="Icono"
+                    name="icono" 
+                    :append-icon="model.icono" v-validate="'required'" 
+                   ></v-text-field>
+                    <form-error :attribute_name="'icono'" :errors_form="errors"> </form-error>
 
                 <v-select outlined dense v-model="model.padre" item-value="id" item-text="titulo" :items="items" label="Permiso padre"></v-select>
 
-                <v-text-field outlined dense v-model="model.orden"  label="Orden de despligue"></v-text-field>
+                <v-text-field outlined dense v-model="model.orden" name="orden" label="Orden de despligue" v-validate="'required|numeric'"></v-text-field>
+                <form-error :attribute_name="'orden'" :errors_form="errors"> </form-error>
 
-                <v-text-field outlined dense v-model="model.descripcion"  label="Descripción"></v-text-field>
+                <v-text-field outlined dense v-model="model.descripcion" name="descripcion" label="Descripción" v-validate="'required'"></v-text-field>
+                <form-error :attribute_name="'descripcion'" :errors_form="errors"> </form-error>
 
                 <v-checkbox v-model="model.visible" label="Visible"></v-checkbox>
             </v-form>
@@ -43,7 +54,7 @@
               {{ $t('miscelanius_cancel_item') }}
             </v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="guardar()">
+          <v-btn color="primary" @click="validar()">
             {{ $t('miscelanius_save_item') }}
           </v-btn>
         </v-card-actions>
@@ -54,10 +65,12 @@
 
 <script>
 import loading from "../../shared/loading"
+import FormError from "@/components/shared/FormError"
 
   export default {
     components:{
-        loading
+        loading,
+        FormError
     },
     data () {
       return {
@@ -80,7 +93,7 @@ import loading from "../../shared/loading"
       }
     },
     mounted(){
-      
+        this.config_error()
     },
     created(){
       this.obtener_padres()
@@ -96,6 +109,13 @@ import loading from "../../shared/loading"
                 .catch(error=>{
 
                 })
+        },
+        validar(){
+        this.$validator.validateAll().then((result) =>{
+                if(result){
+                  this.guardar();
+                }             
+          });
         },
         guardar(){
           
@@ -123,7 +143,32 @@ import loading from "../../shared/loading"
         },
         cancelar(){
             events.$emit('postNuevoRegistro',false)
-        }
+        },
+        config_error(){
+            let self = this
+               let dict = {
+                custom:{
+                  titulo:{
+                      required:this.$t('global_validation_required',{field:'El título'}),
+                  },
+                  ruta:{
+                      required:this.$t('global_validation_required',{field:'La ruta'}),
+                  },
+                  icono:{
+                      required:this.$t('global_validation_required',{field:'El nombre del icono'}),
+                  },
+                  orden:{
+                      required:this.$t('global_validation_required',{field:'El orden'}),
+                      numeric:this.$t('global_validation_numeric',{field:'El orden'}),
+                  },
+                  descripcion:{
+                      required:this.$t('global_validation_required',{field:'La descripción'}),
+                  },
+                }
+               }
+
+              self.$validator.localize('es',dict);
+          },
     }
   }
 </script>

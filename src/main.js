@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import {i18n} from './plugins/i18n'
+import VeeValidate from 'vee-validate';
 
 //import toastr
 import VueToastr2 from 'vue-toastr-2'
@@ -24,6 +25,20 @@ const options = {
   cancelButtonText: "Cancelar"
 }
 
+
+const VueValidationEs = require('vee-validate/dist/locale/es');
+
+const config = {
+  locale: 'es',
+  validity: true,
+  dictionary: {
+    es: VueValidationEs
+  },
+  fieldsBagName: 'campos',
+  errorBagName: 'errors', // change if property conflicts
+};
+
+Vue.use(VeeValidate, config);
 //lodash
 Vue.use(_)
 
