@@ -9,6 +9,11 @@ import PermisoService from '../services/acceso/PermisoService'
 import RolService from '../services/acceso/RolService'
 import UsuarioService from '../services/acceso/UsuarioService'
 
+/* Servicios de catalogos */
+import EstadoServicioService from '@/services/catalogos/EstadoServicioService'
+import TipoPagoService from '@/services/catalogos/TipoPagoService'
+import SectorService from '@/services/catalogos/SectorService'
+
 let baseUrl = 'http://www.sistema_agua.com'
 //let baseUrl = 'http://161.35.114.1:8080'
 
@@ -91,4 +96,9 @@ export default {
   permisoService: new PermisoService(Axios, baseUrl),
   rolService: new RolService(Axios, baseUrl),
   usuarioService: new UsuarioService(Axios, baseUrl),
+
+  /* Servicios de catalogos*/
+  estadoServicioService: new EstadoServicioService(Axios, baseUrl),
+  tipoPagoService: new TipoPagoService(Axios, baseUrl),
+  sectorService: new SectorService(Axios, baseUrl),
 }

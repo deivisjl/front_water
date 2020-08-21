@@ -21,6 +21,22 @@ import rolEditar from '@/components/acceso/rol/Editar';
 import usuario from '@/components/acceso/usuario/Inicio';
 import usuarioRoles from '@/components/acceso/usuario/Roles';
 
+/* Componentes de catalogos*/
+/* Componentes de estado servicio */
+import estadoServicio from '@/components/catalogos/estado_servicio/Inicio';
+import estadoServicioNuevo from '@/components/catalogos/estado_servicio/Nuevo';
+import estadoServicioEditar from '@/components/catalogos/estado_servicio/Editar';
+
+/* Componentes de tipo pago*/
+import tipoPago from '@/components/catalogos/tipo_pago/Inicio';
+import tipoPagoNuevo from '@/components/catalogos/tipo_pago/Nuevo';
+import tipoPagoEditar from '@/components/catalogos/tipo_pago/Editar';
+
+/* Componentes de sector*/
+import sector from '@/components/catalogos/sectores/Inicio';
+import sectorNuevo from '@/components/catalogos/sectores/Nuevo';
+import sectorEditar from '@/components/catalogos/sectores/Editar';
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -37,6 +53,21 @@ const routes = [
 
   {path:'/usuarios-rol', name:'usuario', component:usuario, meta: { middleware: [auth,menu] }},
   {path:'/usuarios-rol/roles/:id', name:'usuarioRoles', component:usuarioRoles, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de estado servicio */
+  {path:'/estado-servicio', name:'estado_servicio', component:estadoServicio, meta: { middleware: [auth,menu] }},
+  {path:'/estado-servicio/nuevo', name:'estado_servicio_nuevo', component:estadoServicioNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/estado-servicio/editar/:id', name:'estado_servicio_editar', component:estadoServicioEditar, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de tipo pago */
+  {path:'/tipo-pago', name:'tipo_pago', component:tipoPago, meta: { middleware: [auth,menu] }},
+  {path:'/tipo-pago/nuevo', name:'tipo_pago_nuevo', component:tipoPagoNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/tipo-pago/editar/:id', name:'tipo_pago_editar', component:tipoPagoEditar, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de sectores */
+  {path:'/sectores', name:'sectores', component:sector, meta: { middleware: [auth,menu] }},
+  {path:'/sectores/nuevo', name:'sectores_nuevo', component:sectorNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/sectores/editar/:id', name:'sectores_editar', component:sectorEditar, meta: { middleware: [auth,menu] }},
 ];
 
 const router = new VueRouter({
