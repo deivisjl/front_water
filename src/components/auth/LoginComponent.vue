@@ -12,7 +12,7 @@
                         <v-card-text>
                             <v-form :autocomplete="'off'" ref="form">
                                 <v-text-field 
-                                        v-validate="'required|email'"
+                                        v-validate="'required|numeric'"
                                         style="margin-bottom: 10px"
                                         autofocus
                                         outlined
@@ -141,8 +141,8 @@ export default {
                let dict = {
                 custom:{
                   usuario:{
-                    required:this.$t('global_validation_required',{field:'El nombre de usuario'}),
-                    email:this.$t('global_validation_valid',{field:'El correo electrónico'}),
+                    required:this.$t('global_validation_required',{field:'El usuario'}),
+                    numeric:this.$t('global_validation_numeric',{field:'El usuario'}),
                   },
                   password:{
                     required:this.$t('global_validation_required',{field:'La contraseña'}),
@@ -157,14 +157,3 @@ export default {
   }
 }
 </script>
-<style>
-    /* .box{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .box .layout {
-        width: 100px;
-        height: 100px;
-    } */
-</style>

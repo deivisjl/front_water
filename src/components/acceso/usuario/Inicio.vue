@@ -43,12 +43,7 @@
                         <v-icon slot="append">search</v-icon>
                     </v-text-field>
                     <v-spacer></v-spacer>
-                    <v-btn
-                        color="primary"
-                        dark
-                        class="mb-2"
-                        @click="nuevo()"
-                    >{{ $t('miscelanius_new_item')}}</v-btn>
+                    
                     </v-toolbar>
                     <!--  -->
                         <v-card
@@ -115,8 +110,10 @@ export default {
     selected:[],
     
     cabeceras:[
-      { text: 'Nombre', value: 'name' },
-      { text: 'Correo electrónico', value: 'email' }
+      { text: 'Nombre', value: 'nombres' },
+      { text: 'Apellidos', value: 'apellidos' },
+      { text: 'Dpi', value: 'email' },
+      { text: 'Correo electrónico', value: 'correo_electronico' }
     ],
     items:[]
   }),
