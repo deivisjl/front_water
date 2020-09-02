@@ -14,6 +14,9 @@ import EstadoServicioService from '@/services/catalogos/EstadoServicioService'
 import TipoPagoService from '@/services/catalogos/TipoPagoService'
 import SectorService from '@/services/catalogos/SectorService'
 
+/*Servicio de usuario*/
+import UsuariosService from '@/services/usuario/UsuarioService'
+
 let baseUrl = 'http://www.sistema_agua.com'
 //let baseUrl = 'http://161.35.114.1:8080'
 
@@ -21,9 +24,9 @@ const credentials = {
   GRANT_TYPE: 'password',
   GRANT_TYPE_REFRESH: 'refresh_token',
   CLIENT_ID: '1',
-  CLIENT_SECRET: '9IXczXWmnnIZJfO7YgA1lNm6gw6fqXaowGhjokS5',
+  CLIENT_SECRET: 'wNwhSXzG8TLwCbm9B6QKv4XQwGZUPJgOSCxKOvhB',
   //CLIENT_ID: '1',
-  //CLIENT_SECRET: ' fPaeYn5noUM5vyhpgEMIraDlrHIGTd2gVCCsJFua'
+  //CLIENT_SECRET: ' wvOdHOycDxAqCiyBfddGBi7gk7lhLtO82MQi99V7'
 }
 
 const instance = Axios.create();
@@ -101,4 +104,7 @@ export default {
   estadoServicioService: new EstadoServicioService(Axios, baseUrl),
   tipoPagoService: new TipoPagoService(Axios, baseUrl),
   sectorService: new SectorService(Axios, baseUrl),
+
+  /* Servicios de usuario */
+  usuariosService: new UsuariosService(Axios, baseUrl),
 }

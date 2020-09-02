@@ -207,7 +207,7 @@ export default {
                   text: data.nombre,
                   icon: "warning",
                   showCancelButton: true,
-                  reverseButtons: true
+                  reverseButtons: false
                 })
                 .then(result =>{
                     if(result.value)

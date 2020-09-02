@@ -224,7 +224,7 @@ export default {
                   text: data.titulo,
                   icon: "warning",
                   showCancelButton: true,
-                  reverseButtons: true
+                  reverseButtons: false
                 })
                 .then(result =>{
                     if(result.value)

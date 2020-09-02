@@ -18,7 +18,7 @@
           <v-list dense>
         <template v-for="(item, j) in menu">
           <v-list-group
-            v-if="item.subgrupo"
+            v-if="item.subgrupo && item.subgrupo.length > 0"
             :key="item.j"
             :prepend-icon="item.icono"
             :append-icon="item.subgrupo.size > 0 ? item.icono : icon"
@@ -50,6 +50,7 @@
           <v-list-item
             v-else
             :key="item.titulo"
+            :to="item.ruta_cliente"
             link
           >
             <v-list-item-action>

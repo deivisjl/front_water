@@ -19,6 +19,6 @@ export default function menu ({to, next, store }){
         let permisos = store.state.permisos
         
         var permiso = _.includes(permisos, path) //verificar si el usuario posee el permiso
-   
+
         return permiso ? next() : router.push('/').catch(err => {})
 }

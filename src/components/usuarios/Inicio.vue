@@ -37,7 +37,7 @@
                 </template>
                 <template v-slot:top>
                     <v-toolbar flat color="white">
-                    <v-toolbar-title>Roles</v-toolbar-title>
+                    <v-toolbar-title>Usuarios</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details v-on:keyup.enter="busqueda">
                         <v-icon slot="append">search</v-icon>
@@ -72,7 +72,7 @@
                               <v-icon>more_vert</v-icon>
                               <v-tooltip top v-if="unitario">
                                 <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on" @click="editar_rol(selected[0])">
+                                  <v-btn icon v-bind="attrs" v-on="on" @click="editar_usuario(selected[0])">
                                     <v-avatar color="green" size="36">
                                       <v-icon color="white darken-2">edit</v-icon>
                                     </v-avatar>
@@ -83,7 +83,7 @@
                               <v-icon v-if="unitario">more_vert</v-icon>
                               <v-tooltip top v-if="opciones">
                                 <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on"  @click="eliminar_rol(selected[0])">
+                                  <v-btn icon v-bind="attrs" v-on="on"  @click="eliminar_usuario(selected[0])">
                                     <v-avatar color="red" size="36">
                                       <v-icon color="white darken-2">delete</v-icon>
                                     </v-avatar>
@@ -101,10 +101,10 @@
     </div>
 </template>
 <script>
-import loading from "../../shared/loading"
+import loading from "../shared/loading"
 
 export default {
-  name: 'Rol',
+  name: 'Usuarios',
 
   components:{
         loading
@@ -126,13 +126,15 @@ export default {
     selected:[],
     
     cabeceras:[
-      { text: 'Nombre', value: 'nombre' },
-      { text: 'Descripción', value: 'descripcion' }
+      { text: 'Nombre', value: 'nombres' },
+      { text: 'Apellidos', value: 'apellidos' },
+      { text: 'Dpi', value: 'email' },
+      { text: 'Correo electrónico', value: 'correo_electronico' }
     ],
     items:[]
   }),
   mounted(){
-    this.obtener_roles()
+    this.obtener_usuarios()
   },
   created(){    
     
@@ -142,7 +144,7 @@ export default {
       handler() {
         if(this.items.length > 0 && this.sincronizar)
         {
-          this.obtener_roles();
+          this.obtener_usuarios();
         }
       },
     },
@@ -151,17 +153,17 @@ export default {
   methods:{
     busqueda(){
       this.sincronizar = false
-      this.obtener_roles()
+      this.obtener_usuarios()
     },
     nuevo(){
-       this.$router.push({path:`roles/nuevo`});
+       this.$router.push({path:`usuarios/nuevo`});
     },
     recargar(){
       this.sincronizar = false
-      this.obtener_roles()
+      this.obtener_usuarios()
       this.selected=[]
     },
-    obtener_roles(){
+    obtener_usuarios(){
       this.loader = true
       const { sortBy, sortDesc, page, itemsPerPage } = this.options;
       
@@ -175,8 +177,8 @@ export default {
           'search':this.buscar
       }
 
-       this.$store.state.services.rolService
-        .getRoles(datos)
+       this.$store.state.services.usuarioService
+        .getUsuarios(datos)
         .then(r=>{
             this.loader = false
             this.items = r.data.data
@@ -187,16 +189,16 @@ export default {
           this.loader = false
         })
     },
-    editar_rol(data){
-      if(data)
-      {
-        this.$router.push({path:`roles/editar/`+data.id});
-      }
+    editar_usuario(data){
+        if(data)
+        {
+            this.$router.push({path:`usuarios/editar/`+data.id});
+        }
     },
-    eliminar_rol(data){
+    eliminar_usuario(data){
        this.$swal({
-		          title: "¿Desea eliminar el registro?",
-                  text: data.nombre,
+                  title: "¿Desea eliminar el registro?",
+                  text: data.nombres,
                   icon: "warning",
                   showCancelButton: true,
                   reverseButtons: false
@@ -205,8 +207,8 @@ export default {
                     if(result.value)
                     {
                         this.loader = true
-                        this.$store.state.services.rolService
-                          .deleteRol(data.id)
+                        this.$store.state.services.usuariosService
+                          .deleteUsuarios(data.id)
                           .then(r=>{
                               this.loader = false
                               toastr.success(this.$t('message_result_delete_success'),this.$t('message_title_global'))
@@ -226,7 +228,7 @@ export default {
                           })
                     }
                 })
-    },
+        },
   },
   computed:{
     opciones(){

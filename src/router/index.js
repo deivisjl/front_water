@@ -37,6 +37,11 @@ import sector from '@/components/catalogos/sectores/Inicio';
 import sectorNuevo from '@/components/catalogos/sectores/Nuevo';
 import sectorEditar from '@/components/catalogos/sectores/Editar';
 
+/*Componentes de usuario*/
+import usuarios from '@/components/usuarios/Inicio';
+import usuariosNuevo from '@/components/usuarios/Nuevo';
+import usuariosEditar from '@/components/usuarios/Editar';
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -68,6 +73,11 @@ const routes = [
   {path:'/sectores', name:'sectores', component:sector, meta: { middleware: [auth,menu] }},
   {path:'/sectores/nuevo', name:'sectores_nuevo', component:sectorNuevo, meta: { middleware: [auth,menu] }},
   {path:'/sectores/editar/:id', name:'sectores_editar', component:sectorEditar, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de usuarios*/
+  {path:'/usuarios', name:'usuarios', component:usuarios, meta: { middleware: [auth,menu] }},
+  {path:'/usuarios/nuevo', name:'usuarios_nuevo', component:usuariosNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/usuarios/editar/:id', name:'usuarios_editar', component:usuariosEditar, meta: { middleware: [auth,menu] }},
 ];
 
 const router = new VueRouter({

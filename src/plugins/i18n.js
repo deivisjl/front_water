@@ -22,6 +22,8 @@ const messages = {
 
                         miscelanius_save_item:'Save',
                         miscelanius_cancel_item:'Cancel',
+                        miscelanius_next_item:'Next',
+                        miscelanius_previuos_item:'Previous',
 
                         message_title_global:'Message',
                         message_result_success:'Record saved successfully',
@@ -67,6 +69,8 @@ const messages = {
 
                         miscelanius_save_item:'Guardar',
                         miscelanius_cancel_item:'Cancelar',
+                        miscelanius_next_item:'Siguiente',
+                        miscelanius_previuos_item:'Anterior',
 
                         message_title_global:'Mensaje',
                         message_result_success:'Registro guardado con éxito',
