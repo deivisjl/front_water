@@ -19,6 +19,9 @@ const messages = {
                         miscelanius_delete_item:'Delete',
                         miscelanius_reload_item:'Reload',
                         miscelanius_update_item:'Update',
+                        miscelanius_approve_item:'Approve',
+                        miscelanius_reject_item:'Reject',
+                        miscelanius_detail_item:'Detail',
 
                         miscelanius_save_item:'Save',
                         miscelanius_cancel_item:'Cancel',
@@ -37,6 +40,11 @@ const messages = {
                         global_validation_valid: '{field} must be valid',
                         global_validation_min: '{field} must contain at least {param} characters',
                         global_validation_numeric:'{field} must be a number',
+
+                        /* Mensajes vista usuarios */
+                        message_tab_personal_data: 'Personal data',
+                        message_tab_notification_data: 'Notification data',
+                        message_tab_account_data: 'Account data',
 
                         vuetify: {
                             dataFooter: {
@@ -66,6 +74,9 @@ const messages = {
                         miscelanius_delete_item:'Borrar',
                         miscelanius_reload_item:'Recargar',
                         miscelanius_update_item:'Actualizar',
+                        miscelanius_approve_item:'Aprobar',
+                        miscelanius_reject_item:'Rechazar',
+                        miscelanius_detail_item:'Detalle',
 
                         miscelanius_save_item:'Guardar',
                         miscelanius_cancel_item:'Cancelar',
@@ -84,6 +95,11 @@ const messages = {
                         global_validation_valid: '{field} debe ser válido(a)',
                         global_validation_min: '{field} debe contener al menos {param} caracteres',
                         global_validation_numeric:'{field} debe ser un número',
+
+                        /* Mensajes vista usuarios */
+                        message_tab_personal_data: 'Datos personales',
+                        message_tab_notification_data: 'Datos de notificación',
+                        message_tab_account_data: 'Datos de la cuenta',
 
                         vuetify:{
                             dataFooter: {

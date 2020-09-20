@@ -34,6 +34,11 @@ class SectorService {
     {
         return this.axios.delete(`${this.baseUrl}/${id}`);
     }
+
+    getSectores()
+    {
+        return this.axios.get(`${this.baseUrl}-obtener`);
+    }
 }
 
 export default SectorService

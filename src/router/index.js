@@ -37,10 +37,26 @@ import sector from '@/components/catalogos/sectores/Inicio';
 import sectorNuevo from '@/components/catalogos/sectores/Nuevo';
 import sectorEditar from '@/components/catalogos/sectores/Editar';
 
+/* Componentes de sector*/
+import comite from '@/components/catalogos/comite/Inicio';
+import comiteNuevo from '@/components/catalogos/comite/Nuevo';
+import comiteEditar from '@/components/catalogos/comite/Editar';
+
 /*Componentes de usuario*/
 import usuarios from '@/components/usuarios/Inicio';
 import usuariosNuevo from '@/components/usuarios/Nuevo';
 import usuariosEditar from '@/components/usuarios/Editar';
+
+/* Componentes de usuario */
+import solicitud from '@/components/solicitud/Inicio';
+import solicitudNuevo from '@/components/solicitud/Nuevo';
+import solicitudEditar from '@/components/solicitud/Editar';
+import solicitudAprobar from '@/components/solicitud/Aprobar';
+import solicitudRechazar from '@/components/solicitud/Rechazar';
+
+/* Componentes de servicio */
+import servicio from '@/components/servicios/Inicio';
+import servicioDetalle from '@/components/servicios/Detalle';
 
 Vue.use(VueRouter)
 
@@ -74,10 +90,26 @@ const routes = [
   {path:'/sectores/nuevo', name:'sectores_nuevo', component:sectorNuevo, meta: { middleware: [auth,menu] }},
   {path:'/sectores/editar/:id', name:'sectores_editar', component:sectorEditar, meta: { middleware: [auth,menu] }},
 
+  /* Rutas de comite */
+  {path:'/comite', name:'comite', component:comite, meta: { middleware: [auth,menu] }},
+  {path:'/comite/nuevo', name:'comite_nuevo', component:comiteNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/comite/editar/:id', name:'comite_editar', component:comiteEditar, meta: { middleware: [auth,menu] }},
+
   /* Rutas de usuarios*/
   {path:'/usuarios', name:'usuarios', component:usuarios, meta: { middleware: [auth,menu] }},
   {path:'/usuarios/nuevo', name:'usuarios_nuevo', component:usuariosNuevo, meta: { middleware: [auth,menu] }},
   {path:'/usuarios/editar/:id', name:'usuarios_editar', component:usuariosEditar, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de solicitudes */
+  {path:'/solicitudes', name:'solicitud', component:solicitud, meta: { middleware: [auth,menu] }},
+  {path:'/solicitudes/nuevo', name:'solicitud_nuevo', component:solicitudNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/solicitudes/editar/:id', name:'solicitud_editar', component:solicitudEditar, meta: { middleware: [auth,menu] }},
+  {path:'/solicitudes/aprobar/:id', name:'solicitud_aprobar', component:solicitudAprobar, meta: { middleware: [auth,menu] }},
+  {path:'/solicitudes/rechazar/:id', name:'solicitud_rechazar', component:solicitudRechazar, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de servicio */
+  {path:'/servicios', name:'servicio', component:servicio, meta: { middleware: [auth,menu] }},
+  {path:'/servicios/detalle/:id', name:'servicio_detalle', component:servicioDetalle, meta: { middleware: [auth,menu] }},
 ];
 
 const router = new VueRouter({

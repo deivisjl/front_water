@@ -1,47 +1,44 @@
 
-class UsuarioService {
+class SolicitudService {
     axios
     baseUrl
     url
 
     constructor(axios, baseUrl){
         this.axios = axios
-        this.baseUrl = `${baseUrl}/api/usuarios`
+        this.baseUrl = `${baseUrl}/api/solicitudes`
         this.url = baseUrl
     }
 
-    getUsuarios(data)
+    getSolicitudes(data)
     {
         return this.axios.get(`${this.baseUrl}?sortBy=${data.sortBy}&sortDesc=${data.sortDesc}&perPage=${data.perPage}&page=${data.page}&search=${data.search}`);
     }
 
-    saveUsuarios(data)
+    saveSolicitud(data)
     {
         return this.axios.post(`${this.baseUrl}`, data);
     }
-    getUsuario(id)
-    {
-        return this.axios.get(`${this.baseUrl}/`+id);
-    }
 
-    editUsuario(id)
+    editSolicitud(id)
     {
         return this.axios.get(`${this.baseUrl}/`+id+`/edit`);
     }
 
-    updateUsuarios(data)
+    updateSolicitud(data)
     {
         return this.axios.put(`${this.baseUrl}/${data.id}`,data);
     }
 
-    deleteUsuarios(id)
+    aprobarSolicitud(data)
     {
-        return this.axios.delete(`${this.baseUrl}/${id}`);
+        return this.axios.post(`${this.url}/api/solicitudes-aprobar`,data);
     }
-    searchUsuario(criterio)
+
+    rechazarSolicitud(data)
     {
-        return this.axios.get(`${this.url}/api/usuario-buscar/${criterio}`);
+        return this.axios.post(`${this.url}/api/solicitudes-rechazar`,data);
     }
 }
 
-export default UsuarioService
+export default SolicitudService
