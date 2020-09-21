@@ -1,18 +1,18 @@
 
-class ServicioService {
+class PagoService {
     axios
     baseUrl
     url
 
     constructor(axios, baseUrl){
         this.axios = axios
-        this.baseUrl = `${baseUrl}/api/servicios`
+        this.baseUrl = `${baseUrl}/api/pagos`
         this.url = baseUrl
     }
 
-    getServicio(data)
+    savePago(data)
     {
-        return this.axios.get(`${this.baseUrl}?sortBy=${data.sortBy}&sortDesc=${data.sortDesc}&perPage=${data.perPage}&page=${data.page}&search=${data.search}`);
+        return this.axios.post(`${this.baseUrl}`, data)
     }
 
     detailServicio(id)
@@ -26,4 +26,4 @@ class ServicioService {
     }
 }
 
-export default ServicioService
+export default PagoService

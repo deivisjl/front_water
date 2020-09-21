@@ -14,6 +14,8 @@ import EstadoServicioService from '@/services/catalogos/EstadoServicioService'
 import TipoPagoService from '@/services/catalogos/TipoPagoService'
 import SectorService from '@/services/catalogos/SectorService'
 import ComiteService from '@/services/catalogos/ComiteService'
+import AnioService from '@/services/catalogos/AnioService'
+import MesService from '@/services/catalogos/MesService'
 
 /*Servicio de usuario*/
 import UsuariosService from '@/services/usuario/UsuarioService'
@@ -24,6 +26,9 @@ import SolicitudService from '@/services/solicitud/SolicitudService'
 /* Servicio de servicio */
 import ServicioService from '@/services/servicio/ServicioService'
 
+/* Servicio de pagos */
+import PagoService from '@/services/pago/PagoService'
+
 let baseUrl = 'http://www.sistema_agua.com'
 //let baseUrl = 'http://161.35.114.1:8080'
 
@@ -31,7 +36,7 @@ const credentials = {
   GRANT_TYPE: 'password',
   GRANT_TYPE_REFRESH: 'refresh_token',
   CLIENT_ID: '1',
-  CLIENT_SECRET: 'ZGFMe2EwnQx8SjTTT7AT3ui4AfQGnJW83wGP4R5L',
+  CLIENT_SECRET: 'rNctrqjNkRzWV0VdE8D8emP42UgoDpdTlOC8OtaI',
   //CLIENT_ID: '1',
   //CLIENT_SECRET: 'ZIZqjJTPRuz7AZzbVtiPObTiGV6oLaCNmmqezxqd'
 }
@@ -112,6 +117,8 @@ export default {
   tipoPagoService: new TipoPagoService(Axios, baseUrl),
   sectorService: new SectorService(Axios, baseUrl),
   comiteService: new ComiteService(Axios, baseUrl),
+  anioService: new AnioService(Axios, baseUrl),
+  mesService: new MesService(Axios, baseUrl),
 
   /* Servicios de usuario */
   usuariosService: new UsuariosService(Axios, baseUrl),
@@ -121,4 +128,7 @@ export default {
 
   /* Servicio de servicio */
   servicioService: new ServicioService(Axios, baseUrl),
+
+  /* Servicio de pago */
+  pagoService: new PagoService(Axios, baseUrl),
 }

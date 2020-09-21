@@ -127,6 +127,7 @@ export default {
     
     cabeceras:[
       { text: 'Nombre', value: 'nombre' },
+      { text: 'Monto', value: 'monto' },
       { text: 'Descripción', value: 'descripcion' }
     ],
     items:[]

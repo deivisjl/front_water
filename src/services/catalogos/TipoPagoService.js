@@ -34,6 +34,11 @@ class TipoPagoService {
     {
         return this.axios.delete(`${this.baseUrl}/${id}`);
     }
+
+    obtenerTipoPago(id)
+    {
+        return this.axios.get(`${this.baseUrl}-obtener`);
+    }
 }
 
 export default TipoPagoService

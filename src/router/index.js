@@ -58,6 +58,11 @@ import solicitudRechazar from '@/components/solicitud/Rechazar';
 import servicio from '@/components/servicios/Inicio';
 import servicioDetalle from '@/components/servicios/Detalle';
 
+/* Componentes de pagos */
+import pago from '@/components/pagos/Inicio';
+import pagoNuevo from '@/components/pagos/Nuevo';
+import pagoDetalle from '@/components/pagos/Detalle';
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -110,6 +115,11 @@ const routes = [
   /* Rutas de servicio */
   {path:'/servicios', name:'servicio', component:servicio, meta: { middleware: [auth,menu] }},
   {path:'/servicios/detalle/:id', name:'servicio_detalle', component:servicioDetalle, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de pagos */
+  {path:'/pagos', name:'pagos', component:pago, meta: { middleware: [auth,menu] }},
+  {path:'/pagos/nuevo/:id', name:'pagosNuevo', component:pagoNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/pagos/detalle/:id', name:'pagosDetalle', component:pagoDetalle, meta: { middleware: [auth,menu] }},
 ];
 
 const router = new VueRouter({

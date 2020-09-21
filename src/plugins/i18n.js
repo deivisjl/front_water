@@ -22,6 +22,7 @@ const messages = {
                         miscelanius_approve_item:'Approve',
                         miscelanius_reject_item:'Reject',
                         miscelanius_detail_item:'Detail',
+                        miscelanius_payment_item:'Payment',
 
                         miscelanius_save_item:'Save',
                         miscelanius_cancel_item:'Cancel',
@@ -77,6 +78,7 @@ const messages = {
                         miscelanius_approve_item:'Aprobar',
                         miscelanius_reject_item:'Rechazar',
                         miscelanius_detail_item:'Detalle',
+                        miscelanius_payment_item:'Pagar',
 
                         miscelanius_save_item:'Guardar',
                         miscelanius_cancel_item:'Cancelar',

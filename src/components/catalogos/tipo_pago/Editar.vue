@@ -15,7 +15,10 @@
                             <v-text-field outlined dense autofocus name="nombre" v-model="model.nombre" v-validate="'required'" label="Nombre"></v-text-field>
                             <form-error :attribute_name="'nombre'" :errors_form="errors"> </form-error>
 
-                            <v-text-field outlined dense name="descripcion" v-model="model.descripcion" v-validate="'required'" label="Descripción"></v-text-field>
+                            <v-text-field outlined dense autofocus name="monto" v-model="model.monto" v-validate="'required|decimal'" label="Monto"></v-text-field>
+                            <form-error :attribute_name="'monto'" :errors_form="errors"> </form-error>
+
+                            <v-text-field outlined dense name="descripcion" v-model="model.descripcion" v-validate="'required'" label="Descripción" v-on:keyup.enter="validar()"></v-text-field>
                             <form-error :attribute_name="'descripcion'" :errors_form="errors"> </form-error>
                         </v-form>
                     </v-card-text>
@@ -54,6 +57,7 @@ import FormError from "@/components/shared/FormError"
         model:{
           id:'',
           nombre:'',
+          monto:'',
           descripcion:'',
         },
       }
@@ -81,6 +85,7 @@ import FormError from "@/components/shared/FormError"
                     this.loader = false
                     this.model.id = r.data.id
                     this.model.nombre = r.data.nombre
+                    this.model.monto = r.data.monto
                     this.model.descripcion = r.data.descripcion
                 })
                 .catch(error=>{
@@ -92,6 +97,7 @@ import FormError from "@/components/shared/FormError"
           let datos = {
             'id':this.model.id,
             'nombre':this.model.nombre,
+            'monto':this.model.monto,
             'descripcion':this.model.descripcion,
           }
           this.loader = true
@@ -122,6 +128,10 @@ import FormError from "@/components/shared/FormError"
                 custom:{
                   nombre:{
                       required:this.$t('global_validation_required',{field:'El nombre'}),
+                  },
+                  monto:{
+                      required:this.$t('global_validation_required',{field:'El monto'}),
+                      numeric:this.$t('global_validation_numeric',{field:'El monto'}),
                   },
                   descripcion:{
                       required:this.$t('global_validation_required',{field:'La descripción'}),

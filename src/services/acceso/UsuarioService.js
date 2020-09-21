@@ -25,6 +25,11 @@ class UsuarioService {
         return this.axios.get(`${this.baseUrl}/`+id+`/edit`);
     }
 
+    get(id) 
+    {    
+        return this.axios.get(`${this.baseUrl}/${id}`)
+    }
+
     updateUsuario(data)
     {
         return this.axios.put(`${this.baseUrl}/${data.id}`,data);

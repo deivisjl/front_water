@@ -18,10 +18,7 @@
                 show-select
                 class="elevation-1"
                 fixed-header
-                >
-                <template v-slot:item.estado="{ item }">
-                    <v-chip :color="getColor(item.estado)" dark>{{ item.estado }}</v-chip>
-                </template>
+                >                
                 <template v-slot:no-data>
                     <v-alert dense outlined :value="true" color="info" icon="warning">
                         No se encontraron registros.
@@ -40,7 +37,7 @@
                 </template>
                 <template v-slot:top>
                     <v-toolbar flat color="white">
-                    <v-toolbar-title>Servicios</v-toolbar-title>
+                    <v-toolbar-title>Pagos</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details v-on:keyup.enter="busqueda">
                         <v-icon slot="append">search</v-icon>
@@ -78,6 +75,17 @@
                                 </template>
                                 <span>{{ $t('miscelanius_detail_item') }}</span>
                               </v-tooltip>
+                              <v-icon v-if="unitario">more_vert</v-icon>
+                              <v-tooltip top v-if="unitario">
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-btn icon v-bind="attrs" v-on="on" @click="pagar_servicio(selected[0])">
+                                    <v-avatar color="orange darken-3" size="36">
+                                      <v-icon color="white darken-2">payment</v-icon>
+                                    </v-avatar>
+                                  </v-btn>
+                                </template>
+                                <span>{{ $t('miscelanius_payment_item') }}</span>
+                              </v-tooltip>
                           </v-toolbar>
                         </v-card>
                     <!--  -->
@@ -113,12 +121,11 @@ export default {
     selected:[],
     
     cabeceras:[
-      { text: 'No. de convenio', value: 'no_convenio' },
+      { text: 'DPI', value: 'dpi' },
       { text: 'Nombres', value: 'nombres' },
       { text: 'Apellidos', value: 'apellidos' },
       { text: 'Sector', value: 'sector' },
-      { text: 'Correo electrónico', value: 'correo_electronico' },
-      { text: 'Estado', value: 'estado' }
+      { text: 'No. convenio', value: 'no_convenio' }
     ],
     items:[]
   }),
@@ -140,12 +147,13 @@ export default {
     deep: true,
   },
   methods:{
+    pagar_servicio(data)
+    {
+       this.$router.push({path:`pagos/nuevo/${data.id}`}); 
+    },
     busqueda(){
       this.sincronizar = false
       this.obtener_servicios()
-    },
-    nuevo(){
-       this.$router.push({path:`solicitudes/nuevo`});
     },
     recargar(){
       this.sincronizar = false
@@ -186,14 +194,10 @@ export default {
           }
         })
     },
-    getColor (item) {
-        if (item === 'Vigente') return 'green'
-        else return 'amber'
-      },
     detalle_servicio(data){
       if(data)
       {
-        this.$router.push({path:`servicios/detalle/`+data.id});
+        this.$router.push({path:`pagos/detalle/`+data.id});
       }
     },
   },
