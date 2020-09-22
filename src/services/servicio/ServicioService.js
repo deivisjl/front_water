@@ -24,6 +24,11 @@ class ServicioService {
     {
         return this.axios.get(`${this.baseUrl}-usuario/` + id);
     }
+
+    titularServicio(id)
+    {
+        return this.axios.get(`${this.url}/api/servicio-titular/` + id);
+    }
 }
 
 export default ServicioService

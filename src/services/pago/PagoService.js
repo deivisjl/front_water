@@ -15,9 +15,9 @@ class PagoService {
         return this.axios.post(`${this.baseUrl}`, data)
     }
 
-    detailServicio(id)
+    detailServicio(data)
     {
-        return this.axios.get(`${this.baseUrl}-detalle/` + id);
+        return this.axios.get(`${this.baseUrl}-detalle?sortBy=${data.sortBy}&sortDesc=${data.sortDesc}&perPage=${data.perPage}&page=${data.page}&search=${data.search}&pago=${data.pago}`);
     }
 
     obtenerServicios(id)

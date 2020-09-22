@@ -29,16 +29,16 @@ import ServicioService from '@/services/servicio/ServicioService'
 /* Servicio de pagos */
 import PagoService from '@/services/pago/PagoService'
 
-let baseUrl = 'http://www.sistema_agua.com'
-//let baseUrl = 'http://161.35.114.1:8080'
+//let baseUrl = 'http://www.sistema_agua.com'
+let baseUrl = 'http://161.35.114.1:8080'
 
 const credentials = {
   GRANT_TYPE: 'password',
   GRANT_TYPE_REFRESH: 'refresh_token',
-  CLIENT_ID: '1',
-  CLIENT_SECRET: 'rNctrqjNkRzWV0VdE8D8emP42UgoDpdTlOC8OtaI',
   //CLIENT_ID: '1',
-  //CLIENT_SECRET: 'ZIZqjJTPRuz7AZzbVtiPObTiGV6oLaCNmmqezxqd'
+  //CLIENT_SECRET: 'rNctrqjNkRzWV0VdE8D8emP42UgoDpdTlOC8OtaI',
+  CLIENT_ID: '1',
+  CLIENT_SECRET: 'P10eXqzJ8Xr2DjlJkJc20iJAdqAXAShQ0hTuStYr'
 }
 
 const instance = Axios.create();
