@@ -37,10 +37,16 @@ import sector from '@/components/catalogos/sectores/Inicio';
 import sectorNuevo from '@/components/catalogos/sectores/Nuevo';
 import sectorEditar from '@/components/catalogos/sectores/Editar';
 
-/* Componentes de sector*/
+/* Componentes de comite*/
 import comite from '@/components/catalogos/comite/Inicio';
 import comiteNuevo from '@/components/catalogos/comite/Nuevo';
 import comiteEditar from '@/components/catalogos/comite/Editar';
+
+/* Componentes de autorizacion*/
+import autorizacion from '@/components/catalogos/autorizacion/Inicio';
+import autorizacionNuevo from '@/components/catalogos/autorizacion/Nuevo';
+import autorizacionEditar from '@/components/catalogos/autorizacion/Editar';
+
 
 /*Componentes de usuario*/
 import usuarios from '@/components/usuarios/Inicio';
@@ -62,6 +68,13 @@ import servicioDetalle from '@/components/servicios/Detalle';
 import pago from '@/components/pagos/Inicio';
 import pagoNuevo from '@/components/pagos/Nuevo';
 import pagoDetalle from '@/components/pagos/Detalle';
+
+/* Componentes de mis servicios */
+import misServicios from '@/components/mis-servicios/Inicio';
+import misServiciosDetalle from '@/components/mis-servicios/Detalle';
+
+/* Componentes de reporte grafico */
+import reporteGrafico from '@/components/reportes/grafico/Inicio';
 
 Vue.use(VueRouter)
 
@@ -100,6 +113,11 @@ const routes = [
   {path:'/comite/nuevo', name:'comite_nuevo', component:comiteNuevo, meta: { middleware: [auth,menu] }},
   {path:'/comite/editar/:id', name:'comite_editar', component:comiteEditar, meta: { middleware: [auth,menu] }},
 
+  /* Rutas de comite */
+  {path:'/autorizaciones', name:'autorizaciones', component:autorizacion, meta: { middleware: [auth,menu] }},
+  {path:'/autorizaciones/nuevo', name:'autorizaciones_nuevo', component:autorizacionNuevo, meta: { middleware: [auth,menu] }},
+  {path:'/autorizaciones/editar/:id', name:'autorizaciones_editar', component:autorizacionEditar, meta: { middleware: [auth,menu] }},
+
   /* Rutas de usuarios*/
   {path:'/usuarios', name:'usuarios', component:usuarios, meta: { middleware: [auth,menu] }},
   {path:'/usuarios/nuevo', name:'usuarios_nuevo', component:usuariosNuevo, meta: { middleware: [auth,menu] }},
@@ -120,6 +138,13 @@ const routes = [
   {path:'/pagos', name:'pagos', component:pago, meta: { middleware: [auth,menu] }},
   {path:'/pagos/nuevo/:id', name:'pagosNuevo', component:pagoNuevo, meta: { middleware: [auth,menu] }},
   {path:'/pagos/detalle/:id', name:'pagosDetalle', component:pagoDetalle, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de mis servicios */
+  {path:'/mis-servicios', name:'misServicios', component:misServicios, meta: { middleware: [auth,menu] }},
+  {path:'/mis-servicios/detalle/:id', name:'misServiciosDetalle', component:misServiciosDetalle, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de los reportes graficos */
+  {path:'/reporte-grafico', name:'reporteGrafico', component:reporteGrafico, meta: { middleware: [auth,menu] }},
 ];
 
 const router = new VueRouter({

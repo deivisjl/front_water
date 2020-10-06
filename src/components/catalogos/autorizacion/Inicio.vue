@@ -18,12 +18,15 @@
                 show-select
                 class="elevation-1"
                 fixed-header
-                >                
-                <template v-slot:no-data>
-                    <v-alert dense outlined :value="true" color="info" icon="warning">
-                        No se encontraron registros.
-                    </v-alert>
+                >
+                <template v-slot:item.activo="{ item }">
+                    <v-chip :color="getColor(item.activo)" dark>{{ getTitulo(item.activo) }}</v-chip>
                 </template>
+                <template v-slot:no-data>
+                  <v-alert dense outlined :value="true" color="info" icon="warning">
+                    No se encontraron registros.
+                  </v-alert>
+              </template>
               <template v-slot:no-results>
                   <v-alert dense outlined :value="true" color="info" icon="warning">
                     No se encontraron registros.
@@ -37,13 +40,18 @@
                 </template>
                 <template v-slot:top>
                     <v-toolbar flat color="white">
-                    <v-toolbar-title>Pagos</v-toolbar-title>
+                    <v-toolbar-title>Autorizaciones</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details v-on:keyup.enter="busqueda">
                         <v-icon slot="append">search</v-icon>
                     </v-text-field>
                     <v-spacer></v-spacer>
-                    
+                    <v-btn
+                        color="primary"
+                        dark
+                        class="mb-2"
+                        @click="nuevo()"
+                    >{{ $t('miscelanius_new_item')}}</v-btn>
                     </v-toolbar>
                     <!--  -->
                         <v-card
@@ -67,24 +75,24 @@
                               <v-icon>more_vert</v-icon>
                               <v-tooltip top v-if="unitario">
                                 <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on" @click="detalle_servicio(selected[0])">
-                                    <v-avatar color="primary" size="36">
-                                      <v-icon color="white darken-2">all_out</v-icon>
+                                  <v-btn icon v-bind="attrs" v-on="on" @click="editar_estado(selected[0])">
+                                    <v-avatar color="green" size="36">
+                                      <v-icon color="white darken-2">edit</v-icon>
                                     </v-avatar>
                                   </v-btn>
                                 </template>
-                                <span>{{ $t('miscelanius_detail_item') }}</span>
+                                <span>{{ $t('miscelanius_edit_item') }}</span>
                               </v-tooltip>
                               <v-icon v-if="unitario">more_vert</v-icon>
-                              <v-tooltip top v-if="unitario">
+                              <v-tooltip top v-if="opciones">
                                 <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on" @click="pagar_servicio(selected[0])">
-                                    <v-avatar color="orange darken-3" size="36">
-                                      <v-icon color="white darken-2">payment</v-icon>
+                                  <v-btn icon v-bind="attrs" v-on="on"  @click="habilitar_estado(selected[0])">
+                                    <v-avatar color="primary" size="36">
+                                      <v-icon color="white darken-2">done</v-icon>
                                     </v-avatar>
                                   </v-btn>
                                 </template>
-                                <span>{{ $t('miscelanius_payment_item') }}</span>
+                                <span>{{ $t('miscelanius_enable_item') }}</span>
                               </v-tooltip>
                           </v-toolbar>
                         </v-card>
@@ -99,7 +107,7 @@
 import loading from "@/components/shared/loading"
 
 export default {
-  name: 'Sectores',
+  name: 'Comite',
 
   components:{
         loading
@@ -121,16 +129,15 @@ export default {
     selected:[],
     
     cabeceras:[
-      { text: 'No. convenio', value: 'no_convenio' },
-      { text: 'DPI', value: 'dpi' },
-      { text: 'Nombres', value: 'nombres' },
-      { text: 'Apellidos', value: 'apellidos' },
-      { text: 'Sector', value: 'sector' }
+      { text: 'Nombre del comité', value: 'nombre_comite' },
+      { text: 'Autorización', value: 'autorizacion' },
+      { text: 'Registro', value: 'registro_contraloria' },
+      { text: 'Estado', value: 'activo' }
     ],
     items:[]
   }),
   mounted(){
-    this.obtener_servicios()
+    this.obtener_autorizaciones()
   },
   created(){    
     
@@ -140,27 +147,34 @@ export default {
       handler() {
         if(this.items.length > 0 && this.sincronizar)
         {
-          this.obtener_servicios();
+          this.obtener_autorizaciones();
         }
       },
     },
     deep: true,
   },
   methods:{
-    pagar_servicio(data)
-    {
-       this.$router.push({path:`pagos/nuevo/${data.id}`}); 
-    },
+    getColor (item) {
+        if (item === 1) return 'green'
+        else return 'amber'
+      },
+      getTitulo (item) {
+        if (item === 1) return 'Activo'
+        else return 'Inactivo'
+      },
     busqueda(){
       this.sincronizar = false
-      this.obtener_servicios()
+      this.obtener_autorizaciones()
+    },
+    nuevo(){
+       this.$router.push({path:`autorizaciones/nuevo`});
     },
     recargar(){
       this.sincronizar = false
-      this.obtener_servicios()
+      this.obtener_autorizaciones()
       this.selected=[]
     },
-    obtener_servicios(){
+    obtener_autorizaciones(){
       this.loader = true
       const { sortBy, sortDesc, page, itemsPerPage } = this.options;
       
@@ -169,13 +183,13 @@ export default {
       let datos = {
           'perPage':itemsPerPage,
           'page':pageNumber === 0 ? 0 : (pageNumber + itemsPerPage - 1),
-          'sortBy':sortBy,
-          'sortDesc':sortDesc,
+          'sortBy':sortBy == '' ? 'activo' : sortBy,
+          'sortDesc':sortDesc == '' ? 'false' : sortDesc,
           'search':this.buscar
       }
 
-       this.$store.state.services.servicioService
-        .getServicio(datos)
+       this.$store.state.services.autorizacionService
+        .getAutorizacion(datos)
         .then(r=>{
             this.loader = false
             this.items = r.data.data
@@ -194,11 +208,45 @@ export default {
           }
         })
     },
-    detalle_servicio(data){
+    editar_estado(data){
       if(data)
       {
-        this.$router.push({path:`pagos/detalle/`+data.id});
+        this.$router.push({path:`autorizaciones/editar/`+data.id});
       }
+    },
+    habilitar_estado(data){
+       this.$swal({
+		          title: "¿Desea habilitar este registro?",
+                  text: data.nombre_comite,
+                  icon: "warning",
+                  showCancelButton: true,
+                  reverseButtons: false
+                })
+                .then(result =>{
+                    if(result.value)
+                    {
+                        this.loader = true
+                        this.$store.state.services.autorizacionService
+                          .habilitarAutorizacion(data.id)
+                          .then(r=>{
+                              this.loader = false
+                              toastr.success(this.$t('message_result_edit_success'),this.$t('message_title_global'))
+                              this.recargar()
+                          })
+                          .catch(error=>{
+                              this.loader = false
+                              if(error.response.data.code === 423 || error.response.data.code === 409){
+                                  toastr.error(this.$t('message_result_error') + error.response.data.error,this.$t('message_title_global'))     
+                              }
+                              else if(error.response.status === 500){
+                                toastr.error(error.response.data.message,this.$t('message_result_error'))
+                              }
+                              else{
+                                  toastr.error(this.$t('message_result_error') + error,this.$t('message_title_global'))
+                              }
+                          })
+                    }
+                })
     },
   },
   computed:{

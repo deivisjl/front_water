@@ -79,7 +79,7 @@
 			</v-btn> -->
       <!--  -->
         
-        <v-menu bottom offset-y v-if="isloggedin">
+        <v-menu bottom offset-y v-if="activeLogout">
           <template v-slot:activator="{on}">
             <v-btn icon v-on="on" dark>
               <v-list-item-avatar>
@@ -166,6 +166,7 @@ export default {
     event_eliminar_menu(data){
       this.menu = []
       this.$store.dispatch("setMenu",[])
+      this.$store.dispatch("setLogin",false)
     },
     setear_menu(){
         menu.construir_menu()
@@ -183,6 +184,9 @@ export default {
   computed:{
       isloggedin: function(){
         return !_.isEmpty(this.$store.state.menu) ? true : false
+      },
+      activeLogout: function(){
+        return this.$store.state.loggedIn
       }
   },
 };

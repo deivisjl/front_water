@@ -10,9 +10,15 @@ class PagoService {
         this.url = baseUrl
     }
 
-    savePago(data)
+    savePago(datos)
     {
-        return this.axios.post(`${this.baseUrl}`, data)
+        return this.axios({
+            url:this.baseUrl,
+            data:datos,
+            method:'POST',
+            responseType:'blob'
+        })
+       // return this.axios.post(`${this.baseUrl}`, data)
     }
 
     detailServicio(data)

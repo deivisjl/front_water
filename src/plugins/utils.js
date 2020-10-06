@@ -3,6 +3,7 @@ import store from '../store'
 export default {
 
 	SISCAP_MENU : "SISCAP_MENU",
+	SISCAP_AUTH : "SISCAP_AUTH",
 
 	construir_menu()
 	{
@@ -52,6 +53,14 @@ export default {
 		/*obtener los datos del local storage*/
 		var datos = this.leer_storage()
 
+		let usuario = this.leer_usuario_storage()
+
+		if(usuario)
+		{
+			
+			store.dispatch('setLogin',true) //bandera de login
+		}
+
 		/*recorrer los datos para construir los permisos*/
 		if(datos && datos.length > 0){
 			
@@ -67,5 +76,10 @@ export default {
 	leer_storage(){
 
 		return JSON.parse(localStorage.getItem(this.SISCAP_MENU))
+	},
+
+	leer_usuario_storage(){
+
+		return JSON.parse(localStorage.getItem(this.SISCAP_AUTH))
 	}
 }

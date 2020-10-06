@@ -15,9 +15,19 @@ class UsuarioService {
         return this.axios.get(`${this.baseUrl}?sortBy=${data.sortBy}&sortDesc=${data.sortDesc}&perPage=${data.perPage}&page=${data.page}&search=${data.search}`);
     }
 
-    saveUsuarios(data)
+   /*  saveUsuarios(data)
     {
         return this.axios.post(`${this.baseUrl}`, data);
+    } */
+    saveUsuarios(datos)
+    {
+        return this.axios({
+            url:this.baseUrl,
+            data:datos,
+            method:'POST',
+            responseType:'blob'
+        })
+        //return this.axios.post(`${this.baseUrl}`, data);
     }
     getUsuario(id)
     {

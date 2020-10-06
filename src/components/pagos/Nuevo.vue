@@ -18,16 +18,13 @@
                             elevation="2"
                             colored-border
                             style="text-align:center">
-                                <h3>Usuario: <span class="blue--text">{{ usuario.nombre }}</span>  DPI: <span class="blue--text">{{ usuario.dpi }}</span></h3>
+                                <h3>Titular: <span class="blue--text">{{ usuario.nombre }}</span>  No convenio: <span class="blue--text">{{ usuario.convenio }}</span></h3>
                             </v-alert>
                         <!-- end Card del usuario -->
                         <v-form :autocomplete="'off'" ref="form" lazy-validation>
 
                             <v-select outlined dense v-model="model.tipo_pago" item-value="id" name="tipo_pago" v-validate="'required'" item-text="nombre" :items="tipos_pagos" label="Tipo de pago" @change="verificar()"></v-select>
                             <form-error :attribute_name="'tipo_pago'" :errors_form="errors"> </form-error>
-
-                            <v-select outlined dense v-model="model.servicio" item-value="id" name="servicio" v-validate="'required'" :item-text="item =>`${item.nombre}, No. convenio ${item.no_convenio}`" :items="servicios" label="Servicio"></v-select>
-                            <form-error :attribute_name="'servicio'" :errors_form="errors"> </form-error>
 
                             <v-select outlined dense v-model="model.mes" item-value="id" name="mes" v-validate="'required'" item-text="nombre" :items="meses" label="Mes de pago" v-if="mostrar_mes"></v-select>
                             <form-error :attribute_name="'mes'" :errors_form="errors"> </form-error>
@@ -71,13 +68,13 @@ import FormError from "@/components/shared/FormError"
         dialog: true,
         loader:false,
         tipos_pagos:[],
-        servicios:[],
         meses:[],
         anios:[],
         mostrar_mes:true,
         usuario:{
             nombre:'',
-            dpi:''
+            servicio:'',
+            convenio:'',
         },
 
         model:{
@@ -129,7 +126,7 @@ import FormError from "@/components/shared/FormError"
             'anio':this.model.anio,
             'mes':this.model.mes,
             'monto':this.model.monto,
-            'servicio':this.model.servicio,
+            'servicio':this.usuario.servicio,
             'tipo_pago':this.model.tipo_pago
           }
 
@@ -139,6 +136,18 @@ import FormError from "@/components/shared/FormError"
                 .savePago(datos)
                 .then(r=>{
                     this.loader = false
+
+                    const blob = new Blob([r.data], {type: r.data.type});
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    let fileName = Date.now()+'.pdf';
+                    link.setAttribute('download', fileName);
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    window.URL.revokeObjectURL(url);
+
                     toastr.success(this.$t('message_result_success'),this.$t('message_title_global'))
                     this.$router.push({path:`/pagos`})                    
                 })
@@ -159,7 +168,7 @@ import FormError from "@/components/shared/FormError"
         {
             this.loader = true
 
-            Promise.all([this.obtener_tipos(),this.obtener_servicios(),this.obtener_usuario(),this.obtener_anios(),this.obtener_meses()])
+            Promise.all([this.obtener_tipos(),this.obtener_usuario(),this.obtener_anios(),this.obtener_meses()])
                 .then(resolve =>{
 
                 })
@@ -202,25 +211,12 @@ import FormError from "@/components/shared/FormError"
         obtener_usuario()
         {
             return new Promise((resolve, reject)=>{
-                this.$store.state.services.usuarioService
-                    .get(this.$route.params.id)
+                this.$store.state.services.servicioService
+                    .getTitularServicio(this.$route.params.id)
                     .then(r=>{
                         this.usuario.nombre = r.data.data.nombre
-                        this.usuario.dpi = r.data.data.dpi
-                        resolve()
-                    })
-                    .catch(error =>{
-                        reject(error)
-                    })
-            })
-        },
-        obtener_servicios()
-        {
-            return new Promise((resolve, reject)=>{
-                this.$store.state.services.servicioService
-                    .obtenerServicios(this.$route.params.id)
-                    .then(r=>{
-                        this.servicios = r.data
+                        this.usuario.convenio = r.data.data.no_convenio
+                        this.usuario.servicio = r.data.data.id
                         resolve()
                     })
                     .catch(error =>{

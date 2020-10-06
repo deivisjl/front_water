@@ -7,14 +7,15 @@ Vue.use(Vuex)
 
 const state ={
   services,
-  user: {
-    loggedIn: false
-  },
+  loggedIn: false,
   menu:[],
   permisos:[]
 },
 
 mutations = {
+  setLogin(state, estado) {
+    state.loggedIn = estado
+  },
   setMenu(state, menu) {
     state.menu = []
     state.menu = menu
@@ -26,6 +27,10 @@ mutations = {
 },
 
 actions = {
+  setLogin({commit}, estado)
+  {
+    commit("setLogin",estado)
+  },
   setMenu({ commit }, menu) {
     commit("setMenu", menu)
   },

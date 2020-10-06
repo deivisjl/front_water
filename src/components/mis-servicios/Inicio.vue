@@ -37,7 +37,7 @@
                 </template>
                 <template v-slot:top>
                     <v-toolbar flat color="white">
-                    <v-toolbar-title>Pagos</v-toolbar-title>
+                    <v-toolbar-title>Mis servicios</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details v-on:keyup.enter="busqueda">
                         <v-icon slot="append">search</v-icon>
@@ -74,17 +74,6 @@
                                   </v-btn>
                                 </template>
                                 <span>{{ $t('miscelanius_detail_item') }}</span>
-                              </v-tooltip>
-                              <v-icon v-if="unitario">more_vert</v-icon>
-                              <v-tooltip top v-if="unitario">
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on" @click="pagar_servicio(selected[0])">
-                                    <v-avatar color="orange darken-3" size="36">
-                                      <v-icon color="white darken-2">payment</v-icon>
-                                    </v-avatar>
-                                  </v-btn>
-                                </template>
-                                <span>{{ $t('miscelanius_payment_item') }}</span>
                               </v-tooltip>
                           </v-toolbar>
                         </v-card>
@@ -147,10 +136,6 @@ export default {
     deep: true,
   },
   methods:{
-    pagar_servicio(data)
-    {
-       this.$router.push({path:`pagos/nuevo/${data.id}`}); 
-    },
     busqueda(){
       this.sincronizar = false
       this.obtener_servicios()
@@ -174,8 +159,8 @@ export default {
           'search':this.buscar
       }
 
-       this.$store.state.services.servicioService
-        .getServicio(datos)
+       this.$store.state.services.miServicioService
+        .getMisServicios(datos)
         .then(r=>{
             this.loader = false
             this.items = r.data.data
@@ -197,7 +182,7 @@ export default {
     detalle_servicio(data){
       if(data)
       {
-        this.$router.push({path:`pagos/detalle/`+data.id});
+        this.$router.push({path:`mis-servicios/detalle/`+data.id});
       }
     },
   },

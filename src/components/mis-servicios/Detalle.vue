@@ -18,12 +18,12 @@
                 show-select
                 class="elevation-1"
                 fixed-header
-                >                
+                >
                 <template v-slot:no-data>
-                    <v-alert dense outlined :value="true" color="info" icon="warning">
-                        No se encontraron registros.
-                    </v-alert>
-                </template>
+                  <v-alert dense outlined :value="true" color="info" icon="warning">
+                    No se encontraron registros.
+                  </v-alert>
+              </template>
               <template v-slot:no-results>
                   <v-alert dense outlined :value="true" color="info" icon="warning">
                     No se encontraron registros.
@@ -37,13 +37,12 @@
                 </template>
                 <template v-slot:top>
                     <v-toolbar flat color="white">
-                    <v-toolbar-title>Pagos</v-toolbar-title>
+                      <v-toolbar-title>Detalles de pago</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-text-field class="text-xs-center" outlined dense v-model="buscar" :label="$t('menu_title_search')" single-line hide-details v-on:keyup.enter="busqueda">
                         <v-icon slot="append">search</v-icon>
                     </v-text-field>
-                    <v-spacer></v-spacer>
-                    
+                    <v-spacer></v-spacer>                    
                     </v-toolbar>
                     <!--  -->
                         <v-card
@@ -65,33 +64,19 @@
                                 <span>{{ $t('miscelanius_reload_item') }}</span>
                               </v-tooltip>
                               <v-icon>more_vert</v-icon>
-                              <v-tooltip top v-if="unitario">
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on" @click="detalle_servicio(selected[0])">
-                                    <v-avatar color="primary" size="36">
-                                      <v-icon color="white darken-2">all_out</v-icon>
-                                    </v-avatar>
-                                  </v-btn>
-                                </template>
-                                <span>{{ $t('miscelanius_detail_item') }}</span>
-                              </v-tooltip>
-                              <v-icon v-if="unitario">more_vert</v-icon>
-                              <v-tooltip top v-if="unitario">
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-btn icon v-bind="attrs" v-on="on" @click="pagar_servicio(selected[0])">
-                                    <v-avatar color="orange darken-3" size="36">
-                                      <v-icon color="white darken-2">payment</v-icon>
-                                    </v-avatar>
-                                  </v-btn>
-                                </template>
-                                <span>{{ $t('miscelanius_payment_item') }}</span>
-                              </v-tooltip>
                           </v-toolbar>
                         </v-card>
                     <!--  -->
-                    
                 </template>
                 </v-data-table>
+                <v-card>
+                    <v-card-actions>
+                        <v-btn color="grey darken-2" text @click="cancelar()">
+                            {{ $t('miscelanius_cancel_item') }}
+                            </v-btn>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                </v-card>
               </v-container>
     </div>
 </template>
@@ -99,7 +84,7 @@
 import loading from "@/components/shared/loading"
 
 export default {
-  name: 'Sectores',
+  name: 'Detalle',
 
   components:{
         loading
@@ -119,18 +104,19 @@ export default {
     editar_registro:false,
     registro:{},
     selected:[],
+    usuario:'',
     
     cabeceras:[
       { text: 'No. convenio', value: 'no_convenio' },
-      { text: 'DPI', value: 'dpi' },
-      { text: 'Nombres', value: 'nombres' },
-      { text: 'Apellidos', value: 'apellidos' },
-      { text: 'Sector', value: 'sector' }
+      { text: 'Mes de pago', value: 'mes' },
+      { text: 'Año', value: 'anio' },
+      { text: 'Monto', value: 'monto' },
+      { text: 'Tipo pago', value: 'tipo_pago' },
     ],
     items:[]
   }),
   mounted(){
-    this.obtener_servicios()
+    this.obtener_pagos()
   },
   created(){    
     
@@ -140,27 +126,28 @@ export default {
       handler() {
         if(this.items.length > 0 && this.sincronizar)
         {
-          this.obtener_servicios();
+          this.obtener_pagos();
         }
       },
     },
     deep: true,
   },
   methods:{
-    pagar_servicio(data)
+    cancelar()
     {
-       this.$router.push({path:`pagos/nuevo/${data.id}`}); 
+      this.$router.push({path:`/mis-servicios`})  
     },
+    
     busqueda(){
       this.sincronizar = false
-      this.obtener_servicios()
+      this.obtener_pagos()
     },
     recargar(){
       this.sincronizar = false
-      this.obtener_servicios()
+      this.obtener_pagos()
       this.selected=[]
     },
-    obtener_servicios(){
+    obtener_pagos(){
       this.loader = true
       const { sortBy, sortDesc, page, itemsPerPage } = this.options;
       
@@ -171,11 +158,12 @@ export default {
           'page':pageNumber === 0 ? 0 : (pageNumber + itemsPerPage - 1),
           'sortBy':sortBy,
           'sortDesc':sortDesc,
-          'search':this.buscar
+          'search':this.buscar,
+          'servicio':this.$route.params.id
       }
-
-       this.$store.state.services.servicioService
-        .getServicio(datos)
+  
+       this.$store.state.services.miServicioService
+        .detailMisServicios(datos)
         .then(r=>{
             this.loader = false
             this.items = r.data.data
@@ -193,12 +181,6 @@ export default {
              toastr.error(this.$t('message_result_error') + error,this.$t('message_title_global'))
           }
         })
-    },
-    detalle_servicio(data){
-      if(data)
-      {
-        this.$router.push({path:`pagos/detalle/`+data.id});
-      }
     },
   },
   computed:{

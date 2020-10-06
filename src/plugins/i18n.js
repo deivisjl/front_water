@@ -12,6 +12,8 @@ const messages = {
                         menu_title_logout:'Logout',
                         menu_title_search:'Search',
 
+                        menu_title_visualice:'Visualice',
+
                         miscelanius_new_item:'New Item',
                         miscelanius_edit_title_item:'Edit Item',
                         miscelanius_edit_item:'Edit',
@@ -23,6 +25,13 @@ const messages = {
                         miscelanius_reject_item:'Reject',
                         miscelanius_detail_item:'Detail',
                         miscelanius_payment_item:'Payment',
+                        miscelanius_enable_item:'Enable',
+
+                        miscelanius_general_collection:'General collection',
+                        miscelanius_services_request:'State Services',
+                        miscelanius_type_collection:'Collection pay by type',
+                        miscelanius_date_from:'Date from',
+                        miscelanius_date_to: 'Date to',
 
                         miscelanius_save_item:'Save',
                         miscelanius_cancel_item:'Cancel',
@@ -68,6 +77,8 @@ const messages = {
                         menu_title_logout:'Cerrar sesión',
                         menu_title_search:'Buscar',
 
+                        menu_title_visualice:'Visualizar',
+
                         miscelanius_new_item:'Nuevo registro',
                         miscelanius_edit_title_item:'Editar registro',
                         miscelanius_edit_item:'Editar',
@@ -79,6 +90,13 @@ const messages = {
                         miscelanius_reject_item:'Rechazar',
                         miscelanius_detail_item:'Detalle',
                         miscelanius_payment_item:'Pagar',
+                        miscelanius_enable_item:'Habilitar',
+
+                        miscelanius_general_collection:'Recaudación general',
+                        miscelanius_services_request:'Estado de los servicios',
+                        miscelanius_type_collection:'Recaudación por tipo de pago',
+                        miscelanius_date_from:'Fecha desde',
+                        miscelanius_date_to: 'Fecha hasta',
 
                         miscelanius_save_item:'Guardar',
                         miscelanius_cancel_item:'Cancelar',

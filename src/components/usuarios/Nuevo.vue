@@ -142,13 +142,26 @@ import FormError from "@/components/shared/FormError"
         this.loader = true
         this.$store.state.services.usuariosService
               .saveUsuarios(datos)
-              .then(r=>{
+              .then((r)=>{
                   this.loader = false
+                   
+                  const blob = new Blob([r.data], {type: r.data.type});
+                  const url = window.URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  let fileName = Date.now()+'.pdf';
+                  link.setAttribute('download', fileName);
+                  document.body.appendChild(link);
+                  link.click();
+                  link.remove();
+                  window.URL.revokeObjectURL(url);
+
                   toastr.success(this.$t('message_result_success'),this.$t('message_title_global'))
                   this.$router.push({path:`/usuarios`})                    
               })
               .catch(error=>{
                  this.loader = false
+                 console.log(error)
                  if(error.response.data.code === 422)
                  {
                     for (let value of Object.values(error.response.data.error)) {

@@ -16,6 +16,7 @@ import SectorService from '@/services/catalogos/SectorService'
 import ComiteService from '@/services/catalogos/ComiteService'
 import AnioService from '@/services/catalogos/AnioService'
 import MesService from '@/services/catalogos/MesService'
+import AutorizacionService from '@/services/catalogos/AutorizacionService'
 
 /*Servicio de usuario*/
 import UsuariosService from '@/services/usuario/UsuarioService'
@@ -29,16 +30,22 @@ import ServicioService from '@/services/servicio/ServicioService'
 /* Servicio de pagos */
 import PagoService from '@/services/pago/PagoService'
 
-//let baseUrl = 'http://www.sistema_agua.com'
-let baseUrl = 'http://161.35.114.1:8080'
+/* Servicio de mis servicios */
+import MiServicioService from '@/services/mis-servicios/MiServicioService'
+
+/* Servicio de reportes */
+import ReporteService from '@/services/reportes/ReporteService'
+
+let baseUrl = 'http://www.sistema_agua.com'
+//let baseUrl = 'http://161.35.114.1:8080'
 
 const credentials = {
   GRANT_TYPE: 'password',
   GRANT_TYPE_REFRESH: 'refresh_token',
-  //CLIENT_ID: '1',
-  //CLIENT_SECRET: 'rNctrqjNkRzWV0VdE8D8emP42UgoDpdTlOC8OtaI',
   CLIENT_ID: '1',
-  CLIENT_SECRET: 'P10eXqzJ8Xr2DjlJkJc20iJAdqAXAShQ0hTuStYr'
+  CLIENT_SECRET: 'Cp72cbCgQ0AAkrERcuaNXtQ2pBblQjMfycXOx7aZ',
+  //CLIENT_ID: '1',
+  //CLIENT_SECRET: ''
 }
 
 const instance = Axios.create();
@@ -119,6 +126,7 @@ export default {
   comiteService: new ComiteService(Axios, baseUrl),
   anioService: new AnioService(Axios, baseUrl),
   mesService: new MesService(Axios, baseUrl),
+  autorizacionService: new AutorizacionService(Axios, baseUrl),
 
   /* Servicios de usuario */
   usuariosService: new UsuariosService(Axios, baseUrl),
@@ -131,4 +139,10 @@ export default {
 
   /* Servicio de pago */
   pagoService: new PagoService(Axios, baseUrl),
+
+  /* Servicio de mis servicios */
+  miServicioService: new MiServicioService(Axios, baseUrl),
+
+  /* Servicio de reporte */
+  reporteService: new ReporteService(Axios, baseUrl),
 }
