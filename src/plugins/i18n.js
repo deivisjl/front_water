@@ -26,6 +26,11 @@ const messages = {
                         miscelanius_detail_item:'Detail',
                         miscelanius_payment_item:'Payment',
                         miscelanius_enable_item:'Enable',
+                        miscelanius_title_report:'Reports',
+                        miscelanius_generate_item:'Generate report',
+                        miscelanius_change_state:'Change state',
+                        miscelanius_new_backup:'New backup',
+                        miscelanius_download_item:'Download',
 
                         miscelanius_general_collection:'General collection',
                         miscelanius_services_request:'State Services',
@@ -91,6 +96,11 @@ const messages = {
                         miscelanius_detail_item:'Detalle',
                         miscelanius_payment_item:'Pagar',
                         miscelanius_enable_item:'Habilitar',
+                        miscelanius_title_report:'Reportes',
+                        miscelanius_generate_item:'Generar reporte',
+                        miscelanius_change_state:'Cambiar estado',
+                        miscelanius_new_backup:'Nuevo respaldo',
+                        miscelanius_download_item:'Descargar',
 
                         miscelanius_general_collection:'Recaudación general',
                         miscelanius_services_request:'Estado de los servicios',

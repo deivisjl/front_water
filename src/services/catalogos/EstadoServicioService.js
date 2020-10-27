@@ -34,6 +34,11 @@ class EstadoServicioService {
     {
         return this.axios.delete(`${this.baseUrl}/${id}`);
     }
+    //auxiliar para obtener sin los estados TRAMITE y RECHAZADO
+    editarEstadoServicio()
+    {
+        return this.axios.get(`${this.url}/api/estado-servicio-editar`);
+    }
 }
 
 export default EstadoServicioService

@@ -35,6 +35,8 @@ import MiServicioService from '@/services/mis-servicios/MiServicioService'
 
 /* Servicio de reportes */
 import ReporteService from '@/services/reportes/ReporteService'
+import ReporteDocumentoService from '@/services/reportes/ReporteDocumentoService'
+import BackupService from '@/services/backup/BackupService'
 
 let baseUrl = 'http://www.sistema_agua.com'
 //let baseUrl = 'http://161.35.114.1:8080'
@@ -43,9 +45,9 @@ const credentials = {
   GRANT_TYPE: 'password',
   GRANT_TYPE_REFRESH: 'refresh_token',
   CLIENT_ID: '1',
-  CLIENT_SECRET: 'Cp72cbCgQ0AAkrERcuaNXtQ2pBblQjMfycXOx7aZ',
+  CLIENT_SECRET: 'Z5gn4RxhKrg18NwdwUcKeStdaX9l2uBMYDSK6ihf',
   //CLIENT_ID: '1',
-  //CLIENT_SECRET: ''
+  //CLIENT_SECRET: 'QXaizI1t9VDLdi2oEDqaZr16Ib6fHtl4DBJ7gCm3'
 }
 
 const instance = Axios.create();
@@ -110,6 +112,17 @@ function refreshToken() {
     })
 }
 
+Axios.interceptors.response.use(response => {
+  return response
+}, error => {
+  if (error.response.data.code === 401) {
+    store.state.services.loginService.logout()
+    return router.push('/login')
+  }
+
+  return error
+});
+
 export default {
   baseUrl,
   loginService: new LoginService(Axios, baseUrl, credentials),
@@ -145,4 +158,8 @@ export default {
 
   /* Servicio de reporte */
   reporteService: new ReporteService(Axios, baseUrl),
+  reporteDocumentoService: new ReporteDocumentoService(Axios, baseUrl),
+
+  /* Servicio de backup */
+  backupService: new BackupService(Axios, baseUrl),
 }

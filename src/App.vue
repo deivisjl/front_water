@@ -83,7 +83,7 @@
           <template v-slot:activator="{on}">
             <v-btn icon v-on="on" dark>
               <v-list-item-avatar>
-                <img src="https://randomuser.me/api/portraits/men/81.jpg">
+                <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y">
               </v-list-item-avatar>
             </v-btn>
           </template>

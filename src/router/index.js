@@ -63,6 +63,7 @@ import solicitudRechazar from '@/components/solicitud/Rechazar';
 /* Componentes de servicio */
 import servicio from '@/components/servicios/Inicio';
 import servicioDetalle from '@/components/servicios/Detalle';
+import servicioEditar from '@/components/servicios/Editar';
 
 /* Componentes de pagos */
 import pago from '@/components/pagos/Inicio';
@@ -75,6 +76,12 @@ import misServiciosDetalle from '@/components/mis-servicios/Detalle';
 
 /* Componentes de reporte grafico */
 import reporteGrafico from '@/components/reportes/grafico/Inicio';
+
+/* Componentes de reporte documento */
+import reporteDocumento from '@/components/reportes/documentos/Inicio';
+
+/* Componentes de respado */
+import backup from '@/components/backup/Inicio';
 
 Vue.use(VueRouter)
 
@@ -133,6 +140,7 @@ const routes = [
   /* Rutas de servicio */
   {path:'/servicios', name:'servicio', component:servicio, meta: { middleware: [auth,menu] }},
   {path:'/servicios/detalle/:id', name:'servicio_detalle', component:servicioDetalle, meta: { middleware: [auth,menu] }},
+  {path:'/servicios/editar/:id', name:'servicio_editar', component:servicioEditar, meta: { middleware: [auth,menu] }},
 
   /* Rutas de pagos */
   {path:'/pagos', name:'pagos', component:pago, meta: { middleware: [auth,menu] }},
@@ -145,6 +153,12 @@ const routes = [
 
   /* Rutas de los reportes graficos */
   {path:'/reporte-grafico', name:'reporteGrafico', component:reporteGrafico, meta: { middleware: [auth,menu] }},
+
+  /* Rutas de los reportes de documentos */
+  {path:'/reporte-documento', name:'reporteDocumento', component:reporteDocumento, meta: { middleware: [auth,menu] }},
+
+  /* Rutas del backup */
+  {path:'/crear-respaldo', name:'backup', component:backup, meta: { middleware: [auth,menu] }},
 ];
 
 const router = new VueRouter({

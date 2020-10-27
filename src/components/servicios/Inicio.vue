@@ -78,6 +78,17 @@
                                 </template>
                                 <span>{{ $t('miscelanius_detail_item') }}</span>
                               </v-tooltip>
+                              <v-icon v-if="unitario">more_vert</v-icon>
+                              <v-tooltip top v-if="unitario">
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-btn icon v-bind="attrs" v-on="on" @click="editar_servicio(selected[0])">
+                                    <v-avatar color="green" size="36">
+                                      <v-icon color="white darken-2">edit</v-icon>
+                                    </v-avatar>
+                                  </v-btn>
+                                </template>
+                                <span>{{ $t('miscelanius_change_state') }}</span>
+                              </v-tooltip>
                           </v-toolbar>
                         </v-card>
                     <!--  -->
@@ -151,6 +162,13 @@ export default {
       this.sincronizar = false
       this.obtener_servicios()
       this.selected=[]
+    },
+    editar_servicio(data)
+    {
+        if(data)
+        {
+          this.$router.push({path:`servicios/editar/`+data.id});
+        }
     },
     obtener_servicios(){
       this.loader = true
