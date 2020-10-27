@@ -122,7 +122,7 @@ import loading from "@/components/shared/loading";
     },
     computed:{
         desplegar_fecha_fin(){
-            return  moment(this.valorFechaFin).format('DD-MM-YYYY')
+            return  moment(this.valorFechaFin).add(1,'days').format('DD-MM-YYYY')
         },
 
         desplegar_fecha_inicio(){

@@ -38,16 +38,16 @@ import ReporteService from '@/services/reportes/ReporteService'
 import ReporteDocumentoService from '@/services/reportes/ReporteDocumentoService'
 import BackupService from '@/services/backup/BackupService'
 
-let baseUrl = 'http://www.sistema_agua.com'
-//let baseUrl = 'http://161.35.114.1:8080'
+//let baseUrl = 'http://www.sistema_agua.com'
+let baseUrl = 'http://161.35.114.1:8080'
 
 const credentials = {
   GRANT_TYPE: 'password',
   GRANT_TYPE_REFRESH: 'refresh_token',
-  CLIENT_ID: '1',
-  CLIENT_SECRET: 'Z5gn4RxhKrg18NwdwUcKeStdaX9l2uBMYDSK6ihf',
   //CLIENT_ID: '1',
-  //CLIENT_SECRET: 'QXaizI1t9VDLdi2oEDqaZr16Ib6fHtl4DBJ7gCm3'
+  //CLIENT_SECRET: 'Z5gn4RxhKrg18NwdwUcKeStdaX9l2uBMYDSK6ihf',
+  CLIENT_ID: '1',
+  CLIENT_SECRET: 'QXaizI1t9VDLdi2oEDqaZr16Ib6fHtl4DBJ7gCm3'
 }
 
 const instance = Axios.create();
